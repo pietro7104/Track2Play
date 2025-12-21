@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.2vw;
+}
+html{
+
+}
+
+.error-message{
+    color: red;
+}
+
+.button{
+    border: solid grey 1px;
+    border-radius: 0;
+    background: none;
+    padding: 5px;
+}
+
+.button:hover{
+    transition: 0.2s;
+    background-color: grey;
+}
+
+.login_fieldset{
+    background-color: white;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    aspect-ratio: 1;
+    width: 20vw;
+
+    text-align: center;
+}
+
+.login_fieldset .title{
+    color: lightskyblue;
+    background-color: white;
+    font-size: 30px;
+    font-weight: bold;
+
+    padding-bottom: 5px;
+}
+
+.login_fieldset form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    height: 140px;
+}
+
+
+
+
+
+.navbar{
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom-style: solid;
+    border-bottom-color: lightskyblue;
+    border-bottom-width: 2px;
+
+    background-color: white;
+    width: 100vw;
+}
+
+.navbar_button{
+    border: none;
+    background: none;
+    padding: 10px;
+    font-size: 1.2vw;
+}
+
+.navbar_button:hover{
+    transition: 0.2s;
+    background-color: lightskyblue;
+}
+
+.search-bar{
+    height: 20px;
+}
+
+.search-button{
+}
+
+.popup-block{
+    display: none;
+    position: fixed;
+    z-index: 9;
+    padding-bottom: 50vh;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.popup-block.show{
+    visibility: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 0.5s
+}
+
+.popup{
+
+    z-index: 10;
+    background-color: white;
+    border: solid lightcoral 2px;
+
+    padding: 3px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+.home-page{
+    background-color: #070c21;
+    color: white;
+}
+
+.home-page h1{
+    font-size: 3vw;
+    padding: 10px;
+
+    text-decoration: underline;
+}
+
+.collection{
+    padding: 10px;
+    display: grid;
+    row-gap: 30px;
+    column-gap: 30px;
+
+    grid-template-columns: repeat( auto-fit, minmax(0px, 250px) ); /*non so che significa*/
+}
+
+
+.game-display{
+    display: flex;
+    width: 226px;
+    flex-direction: column;
+
+    border: solid lightslategray 3px;
+
+    transform-origin: center;
+}
+
+.game-display:hover{
+    transition: 0.1s;
+    transform: scale(1.1, 1.1);
+}
+
+.game-display img{
+    aspect-ratio: 460/215;
+    object-fit: cover;
+}
+
+.game-display .game-name-display{
+    background-color: #2A475E;
+    color: white;
+    padding: 5px;
+}
+
