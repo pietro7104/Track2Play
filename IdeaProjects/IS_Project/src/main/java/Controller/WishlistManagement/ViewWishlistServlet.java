@@ -36,7 +36,7 @@ public class ViewWishlistServlet extends HttpServlet {
 
             List<WishlistItem> wishlistItems = wishlistDAO.getWishlistItems(username);
             request.setAttribute("wishlistItems", wishlistItems);
-            RequestDispatcher rd = request.getRequestDispatcher("wishlist.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
         } catch (SQLException e) {
             Utility.addError(request, "Errore nel recuperare gli articoli della wishlist: " + e.getMessage());

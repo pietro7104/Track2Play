@@ -43,7 +43,7 @@ public class AddWishlistItemServlet extends HttpServlet {
             response.sendRedirect("Wishlist/View");  // Reindirizza alla pagina di visualizzazione della wishlist
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiungere l'articolo alla wishlist");
-            RequestDispatcher rd = request.getRequestDispatcher("wishlist.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
         }
     }
