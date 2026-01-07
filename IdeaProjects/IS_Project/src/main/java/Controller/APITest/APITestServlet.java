@@ -46,7 +46,7 @@ public class APITestServlet extends HttpServlet {
         }
         //api.SearchByTitle("Sonic", 5);*/
 
-        ArrayList<String> ids = new ArrayList<>();
+        /*ArrayList<String> ids = new ArrayList<>();
         ids.add(api.GetGameInfoBySteamID("2513280").getIsThereAnyDealID());
         ids.add("018d937f-42c6-70a5-a29b-9d8c2e0f7b84");
         ids.add("018d937f-6128-7151-8d2e-b4a9ad2e1ce8");
@@ -66,6 +66,17 @@ public class APITestServlet extends HttpServlet {
             Price price = prices.get(key);
             for (Deal deal : price.deals){
                 System.out.println("shopName: " + deal.shopName + " price: " + deal.dealPrice.amount + " " + deal.dealPrice.currency + " cut: " + deal.cut);
+            }
+        }*/
+
+        ArrayList<Game> games = api.SearchByTitle("Sonic", 100);
+
+        for (Game game : games) {
+            System.out.println("Highest res banner: " + game.GetHighestResolutionBanner());
+            if (game.GetHighestResolutionBanner().isEmpty()){
+                for (String key : game.getAssets().keySet()){
+                    System.out.println(key + ": " + game.getAssets().get(key));
+                }
             }
         }
     }

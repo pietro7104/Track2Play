@@ -17,10 +17,13 @@
     </a>
 
     <div>
-        <label>
-            <input class="search-bar" type="text" placeholder="Cerca..">
-        </label>
-        <button class="search-button">Cerca</button>
+        <form action="Search" method="get">
+            <label>
+                <input name="query" class="search-bar" type="text" placeholder="Cerca..">
+            </label>
+            <button type="submit" class="search-button">Cerca</button>
+        </form>
+
     </div>
 
     <div style="display: flex; flex-direction: row">
@@ -49,3 +52,4 @@
 
 </header>
 </html>
+
