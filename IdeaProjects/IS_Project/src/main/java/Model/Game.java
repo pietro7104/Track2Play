@@ -36,6 +36,7 @@ public class Game {
         this.hasTradingCards = hasTradingCards;
         this.hasAchievements = hasAchievements;
         this.isEarlyAccess = isEarlyAccess;
+
     }
 
     public String getSteamID() {
@@ -288,11 +289,36 @@ public class Game {
         this.mature = mature;
     }
 
-    public Game(String isThereAnyDealID, String title, String type, boolean mature) {
+    public Game(String isThereAnyDealID, String title, String type, boolean mature, HashMap<String, String> assets) {
         this.isThereAnyDealID = isThereAnyDealID;
         this.title = title;
         this.type = type;
         this.mature = mature;
+        this.assets = assets;
+    }
+
+
+    public String GetHighestResolutionBanner(){
+        String highestResolution = "";
+        int resolution = 0;
+        for (String key : assets.keySet()) {
+            if (key.contains("banner")){
+                String res = key.replace("banner", "");
+                int r;
+                try{r = Integer.parseInt(res);}
+                catch(Exception e){
+                    r = 0;
+                    System.out.println(title + " - " + key);
+                }
+
+                if (r >= resolution) {
+                    highestResolution = key;
+                    resolution = r;
+                }
+            }
+        }
+        if (highestResolution.isEmpty()) return "";
+        return assets.get(highestResolution);
     }
 
 

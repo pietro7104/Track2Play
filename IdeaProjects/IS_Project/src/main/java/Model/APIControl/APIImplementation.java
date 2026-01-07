@@ -2,6 +2,7 @@ package Model.APIControl;
 
 import Model.Game;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -84,6 +85,7 @@ public class APIImplementation implements APIInterface {
     {
         try (HttpClient client = HttpClient.newHttpClient()) {
             maxResults = Math.clamp(maxResults, 1, 100);
+            title = title.replace(" ", "_");
             String url = "https://api.isthereanydeal.com/games/search/v1?key=" + getKey() + "&title=" + title + "&results=" + maxResults;
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(timeUntilTimeout)).build();
             HttpResponse<String> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
@@ -94,7 +96,38 @@ public class APIImplementation implements APIInterface {
             ArrayList<Game> games = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Game game = new Game(jsonObject.getString("id"), jsonObject.getString("title"), jsonObject.getString("type"), jsonObject.getBoolean("mature"));
+                String id = jsonObject.getString("id");
+                String gameTitle;
+                try{
+                    gameTitle = jsonObject.getString("title");
+                }
+                catch (JSONException e){
+                    gameTitle = "";
+                }
+
+                String type;
+                try{
+                    type = jsonObject.getString("type");
+                }
+                catch (JSONException e){
+                    type = "";
+                }
+                boolean mature;
+                try{
+                    mature = jsonObject.getBoolean("mature");
+                }
+                catch (JSONException e){
+                    mature = false;
+                }
+                JSONObject assetsJSON = jsonObject.getJSONObject("assets");
+                HashMap<String, String> assets = new HashMap<>();
+                if (assetsJSON != null){
+                    for (String key : assetsJSON.keySet()) {
+                        String assetUrl = assetsJSON.getString(key);
+                        if (assetUrl != null) assets.put(key, assetUrl);
+                    }
+                }
+                Game game = new Game(id, gameTitle, type, mature, assets);
                 games.add(game);
             }
             return games;

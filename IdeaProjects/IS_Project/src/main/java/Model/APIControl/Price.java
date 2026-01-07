@@ -19,6 +19,15 @@ public class Price {
         this.threeMonthsLow = threeMonthsLow;
         this.oneYearLow = oneYearLow;
         this.deals = deals;
+    }
 
+    public Deal GetBestDeal() {
+        Deal bestDeal = deals.getFirst();
+        for (Deal deal : deals) {
+            if (deal.cut > bestDeal.cut) {
+                bestDeal = deal;
+            }
+        }
+        return bestDeal;
     }
 }
