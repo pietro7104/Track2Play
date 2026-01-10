@@ -24,7 +24,7 @@ public class Price {
     public Deal GetBestDeal() {
         Deal bestDeal = deals.getFirst();
         for (Deal deal : deals) {
-            if (deal.cut > bestDeal.cut) {
+            if (deal.dealPrice.amount < bestDeal.dealPrice.amount) {
                 bestDeal = deal;
             }
         }

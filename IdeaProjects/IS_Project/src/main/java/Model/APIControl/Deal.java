@@ -18,6 +18,110 @@ public class Deal {
 
     public ZonedDateTime expiry;
 
+    public ZonedDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(ZonedDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getShopID() {
+        return shopID;
+    }
+
+    public void setShopID(int shopID) {
+        this.shopID = shopID;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Cost getRegularPrice() {
+        return regularPrice;
+    }
+
+    public void setRegularPrice(Cost regularPrice) {
+        this.regularPrice = regularPrice;
+    }
+
+    public Cost getDealPrice() {
+        return dealPrice;
+    }
+
+    public void setDealPrice(Cost dealPrice) {
+        this.dealPrice = dealPrice;
+    }
+
+    public Cost getStoreLow() {
+        return storeLow;
+    }
+
+    public void setStoreLow(Cost storeLow) {
+        this.storeLow = storeLow;
+    }
+
+    public ZonedDateTime getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(ZonedDateTime expiry) {
+        this.expiry = expiry;
+    }
+
+    public float getCut() {
+        return cut;
+    }
+
+    public void setCut(float cut) {
+        this.cut = cut;
+    }
+
+    public String getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
+
+    public ArrayList<DRM> getDrms() {
+        return drms;
+    }
+
+    public void setDrms(ArrayList<DRM> drms) {
+        this.drms = drms;
+    }
+
+    public ArrayList<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(ArrayList<Platform> platforms) {
+        this.platforms = platforms;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
     public float cut;
 
     public String voucher;
