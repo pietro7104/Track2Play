@@ -3,7 +3,8 @@
 CREATE TABLE Utente (
 	IdUtente int auto_increment primary key,
     Username varchar(30) unique not null,
-    Password varchar(128) not null
+    Password varchar(128) not null,
+    Codice_ISO char(2) not null
 );
 
 CREATE TABLE Gioco (
