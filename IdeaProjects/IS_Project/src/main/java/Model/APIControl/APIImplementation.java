@@ -25,9 +25,8 @@ import java.util.Map;
 
 public class APIImplementation implements APIInterface {
 
-    private long timeUntilTimeout = 10;
+    private final long timeUntilTimeout = 10;
 
-    //Nascodi dal github in qualche modo?
     private String key = "";
 
     private String getKey() {
@@ -371,18 +370,27 @@ public class APIImplementation implements APIInterface {
                 Cost threeMonthLow = null;
                 Cost oneYearLow = null;
                 if (history != null) {
-                    JSONObject all = history.getJSONObject("all");
-                    if (all != null) {
+                    JSONObject all;
+                    try{
+                        all = history.getJSONObject("all");
                         allTimeLow = new Cost(all.getFloat("amount"), all.getString("currency"));
                     }
-                    JSONObject y1 = history.getJSONObject("y1");
-                    if (y1 != null) {
+                    catch (Exception _){}
+
+                    JSONObject y1;
+                    try {
+                        y1 = history.getJSONObject("y1");
                         oneYearLow = new Cost(y1.getFloat("amount"), y1.getString("currency"));
                     }
-                    JSONObject m3 = history.getJSONObject("m3");
-                    if (m3 != null) {
+                    catch (Exception _){}
+
+                    JSONObject m3;
+                    try{
+                        m3 = history.getJSONObject("m3");
                         threeMonthLow = new Cost(m3.getFloat("amount"), m3.getString("currency"));
                     }
+                    catch (Exception _){}
+
                 }
 
                 JSONArray dealsJSON = jsonObject.getJSONArray("deals");
@@ -401,61 +409,70 @@ public class APIImplementation implements APIInterface {
                         float amount = -1;
                         String currency = "";
                         if (price != null){
-                            amount = price.getFloat("amount");
-                            currency = price.getString("currency");
+                            try{
+                                amount = price.getFloat("amount");
+                                currency = price.getString("currency");
+                            }
+                            catch (Exception _){}
                         }
                         JSONObject regularPrice = deal.getJSONObject("regular");
                         float regularAmount = -1;
                         String regularCurrency = "";
                         if (regularPrice != null){
-                            regularAmount = regularPrice.getFloat("amount");
-                            regularCurrency = regularPrice.getString("currency");
+                            try{
+                                regularAmount = regularPrice.getFloat("amount");
+                                regularCurrency = regularPrice.getString("currency");
+                            }catch (Exception _){}
+
                         }
-                        float cut = deal.getFloat("cut");
-                        String voucher;
+                        float cut = 0;
+                        try {
+                            cut = deal.getFloat("cut");
+                        }catch (Exception _){}
+
+                        String voucher = "";
                         try{
                             voucher = deal.getString("voucher") != null ? deal.getString("voucher") : ""; //non so che cos'è
-                        }
-                        catch (Exception e){
-                            voucher = "";
-                        }
+                        } catch (Exception _){}
 
-                        JSONObject storeLow = deal.getJSONObject("storeLow");
+
                         float storeLowAmount = -1;
                         String storeLowCurrency = "";
-                        if (storeLow != null){
+                        try{
+                            JSONObject storeLow = deal.getJSONObject("storeLow");
                             storeLowAmount = storeLow.getFloat("amount");
                             storeLowCurrency = storeLow.getString("currency");
-                        }
+                        }catch (Exception _){}
 
-                        String flag;
+
+                        String flag = "";
                         try{
                             flag = deal.getString("flag") != null ? deal.getString("flag") : "";
                         }
-                        catch (Exception e){
-                            flag = "";
-                        }
+                        catch (Exception _){}
 
                         JSONArray drm = deal.getJSONArray("drm");
                         ArrayList<DRM> drms = new ArrayList<>();
                         if (drm != null){
                             for (int k = 0; k < drm.length(); k++) {
-                                JSONObject d = drm.getJSONObject(k);
-                                if (d != null){
+                                try{
+                                    JSONObject d = drm.getJSONObject(k);
                                     int drmId = d.getInt("id");
                                     String drmName = d.getString("name");
                                     drms.add(new DRM(drmId, drmName));
-                                }
+                                }catch (Exception _){}
                             }
                         }
+
                         JSONArray platformsJSON = deal.getJSONArray("platforms");
                         ArrayList<Platform> platforms = new ArrayList<>();
                         if (platformsJSON != null){
                             for (int q = 0; q < platformsJSON.length(); q++) {
-                                JSONObject platform = platformsJSON.getJSONObject(q);
-                                if (platform != null) {
+                                try{
+                                    JSONObject platform = platformsJSON.getJSONObject(q);
                                     Platform p = new Platform(platform.getInt("id"), platform.getString("name"));
-                                }
+                                    platforms.add(p);
+                                }catch (Exception _){}
                             }
                         }
                         String timestampString = deal.getString("timestamp");
@@ -464,9 +481,7 @@ public class APIImplementation implements APIInterface {
                         try{
                             expiryString = deal.getString("expiry") != null ? deal.getString("expiry") : "";
                         }
-                        catch (Exception e){
-                            expiryString = "";
-                        }
+                        catch (Exception _){}
 
                         ZonedDateTime expiry = null;
                         if (!expiryString.isEmpty()) expiry = ZonedDateTime.parse(expiryString);
