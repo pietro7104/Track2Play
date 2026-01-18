@@ -9,8 +9,8 @@ CREATE TABLE Utente (
 
 CREATE TABLE Gioco (
 	IdGioco varchar(36) primary key,        # varchar(36) dato che l id usato da IsThereAnyDeal è di 36 caratteri, ma dopo il testing potremmo cambiare in char(36)
-    Titolo varchar(100) not null,
-    Copertina varchar(150) not null         # "Copertina" indica il link da dove prendere la copertina
+    Titolo varchar(100),
+    Copertina varchar(150)         # "Copertina" indica il link da dove prendere la copertina
 );
 
 CREATE TABLE Acquisto (
@@ -20,6 +20,7 @@ CREATE TABLE Acquisto (
     Piattaforma varchar(50) not null,
     Prezzo double not null,
     Regalo boolean not null,
+    Moneta_ISO char(3) not null,
     primary key(Data_Acquisto, IdUtente, IdGioco)
 );
 
