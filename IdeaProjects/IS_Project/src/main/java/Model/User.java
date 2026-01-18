@@ -4,6 +4,15 @@ public class User {
     int id;
     String username;
     String password;
+    String codiceISO;
+
+    public void setCodiceISO(String codiceISO) {
+        this.codiceISO = codiceISO;
+    }
+
+    public String getCodiceISO() {
+        return codiceISO;
+    }
 
     public int getID() {
         return id;

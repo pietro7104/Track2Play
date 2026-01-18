@@ -15,6 +15,7 @@ public class Utility {
         request.setAttribute("error_list", errorlist);
     }
 
+    // Hashing SHA-512 con lunghezza di hash a 128 caratteri
     public static String toHash(String pass){
         String hashString = null;
         try{

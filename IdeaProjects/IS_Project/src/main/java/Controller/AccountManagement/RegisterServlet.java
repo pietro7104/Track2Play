@@ -22,9 +22,11 @@ public class RegisterServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String codiceISO = request.getParameter("codiceISO");
 
         UserDAO userDAO = new UserDAO();
         User u = null;
+
         try{
             u = userDAO.getUserByUsername(username);
         }
@@ -34,6 +36,7 @@ public class RegisterServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+
         if (u != null){
             System.out.println("this username is already taken");
             //HANDLE EXCEPTION
@@ -42,25 +45,8 @@ public class RegisterServlet extends HttpServlet {
 
         String hashedPassword = Utility.toHash(password);
 
-        Random rand = new Random();
-        User u1 = null;
-        int id;
-        do{
-            id = rand.nextInt(0, 99999999);
-
-            try{
-                u1 = userDAO.getUserByUsername(username);
-            }
-            catch (SQLException e){
-                Utility.addError(request, "Errore nella registrazione");
-                RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
-                rd.forward(request, response);
-                return;
-            }
-        }while (u1 != null);
-
         try {
-            userDAO.addUser(id, username, hashedPassword);
+            userDAO.addUser(username, hashedPassword, codiceISO);
         }
         catch (SQLException e){
             System.out.println("SQLException: " + e.getMessage());

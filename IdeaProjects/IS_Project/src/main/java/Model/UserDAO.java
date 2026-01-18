@@ -7,11 +7,12 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public void addUser(String username, String password) throws SQLException {
+    public void addUser(String username, String password, String codiceISO) throws SQLException {
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement("insert into Utente (Username, Password) values(?,?)");
+        PreparedStatement ps = con.prepareStatement("insert into Utente (Username, Password, Codice_ISO) values(?,?,?)");
         ps.setString(1, username);
         ps.setString(2, password);
+        ps.setString(3, codiceISO);
         ps.executeUpdate();
     }
 
@@ -25,6 +26,7 @@ public class UserDAO {
                 user.setID(rs.getInt("IdUtente"));
                 user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
+                user.setCodiceISO(rs.getString("Codice_ISO"));
                 return user;
             }
             else return null;
@@ -40,6 +42,7 @@ public class UserDAO {
             user.setID(rs.getInt("IdUtente"));
             user.setUsername(rs.getString("Username"));
             user.setPassword(rs.getString("Password"));
+            user.setCodiceISO(rs.getString("Codice_ISO"));
             return user;
         }
         else return null;

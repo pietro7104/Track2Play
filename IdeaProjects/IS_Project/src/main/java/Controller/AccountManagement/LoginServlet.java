@@ -35,7 +35,8 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (u == null){
-            Utility.addError(request, "Username e/o password incorretti");
+            // Entriamo se non è stato trovato un account con l'username inserito nel form di login
+            Utility.addError(request, "Non e' stato trovato un account con l'username inserito");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             System.out.println("User not found");
@@ -43,6 +44,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (Utility.toHash(password).equals(u.getPassword())){
+            // Entriamo se la password del database e quella inserita nel form di login coincidono
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             //session.setMaxInactiveInterval(60); //??
@@ -52,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
         else {
-            Utility.addError(request, "Username e/o password incorretti");
+            Utility.addError(request, "Password incorretta");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             return;
