@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -7,9 +6,10 @@
 <head>
     <title>Home Page</title>
 </head>
+<jsp:include page="includables/Error%20Popup.jsp"/>
 
-<jsp:include page="includables/NavBar.jsp"/>
 <body class="home-page">
-    Home Page
+<jsp:include page="includables/NavBar.jsp"/>
+Home Page
 </body>
 </html>

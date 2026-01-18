@@ -9,6 +9,10 @@ html{
 
 }
 
+script{
+    display: none;
+}
+
 .error-message{
     color: red;
 }
@@ -74,6 +78,8 @@ html{
 
     background-color: white;
     width: 100vw;
+
+    z-index: 100;
 }
 
 .navbar_button{
@@ -151,8 +157,8 @@ html{
 .collection{
     padding: 10px;
     display: grid;
-    row-gap: 30px;
-    column-gap: 30px;
+    row-gap: 20px;
+    column-gap: 0;
 
     grid-template-columns: repeat( auto-fit, minmax(0px, 250px) ); /*non so che significa*/
 }
@@ -163,7 +169,7 @@ html{
     width: 226px;
     flex-direction: column;
 
-    border: solid lightslategray 3px;
+    border: solid lightslategray 2px;
 
     transform-origin: center;
 }
@@ -171,11 +177,14 @@ html{
 .game-display:hover{
     transition: 0.1s;
     transform: scale(1.1, 1.1);
+    cursor: pointer;
 }
 
 .game-display img{
     aspect-ratio: 460/215;
     object-fit: cover;
+    margin: 0px;
+    z-index: -1;
 }
 
 .game-display .game-name-display{
@@ -185,12 +194,12 @@ html{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: block;
 }
 
-.game .game-price-display{
+.game-price-display{
     background-color: #2A475E;
     color: white;
-    padding: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -205,9 +214,63 @@ html{
 .regular-price{
     text-decoration: line-through;
     color: slategrey;
+    padding: 2px;
 }
 
-.game .game-price-text{
-
+.game-price-text{
+    padding: 2px;
 }
 
+.game-page{
+    display: flex;
+    flex-direction: column;
+}
+
+.game-page-left{
+    display: flex;
+    flex-direction: column;
+}
+
+.game-page-right{
+    display: flex;
+    flex-direction: column;
+}
+
+.game-image{
+    border: solid 2px slategray;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+
+    width: 400px;
+    aspect-ratio: 460/215;
+    object-fit: cover;
+}
+
+
+
+.game-prices{
+    display: flex;
+    flex-direction: column;
+}
+
+.game-price-display
+{
+    flex-direction: row;
+    display: flex;
+}
+
+.deal-display{
+    border: solid 2px lightslategray;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    justify-content: space-between;
+    margin: 20px;
+
+    width: 400px;
+}
