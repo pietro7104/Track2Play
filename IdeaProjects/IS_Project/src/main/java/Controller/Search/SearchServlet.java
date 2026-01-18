@@ -2,7 +2,6 @@ package Controller.Search;
 
 import Controller.Utility;
 import Model.APIControl.APIExceptions.APIException;
-import Model.APIControl.APIImplementation;
 import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
 import Model.APIControl.Shop;
@@ -17,13 +16,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 @WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");
-        APIInterface api = Utility.getAPIImplementation();
+        APIInterface api = Utility.getAPI();
         ArrayList<Game> games;
         try {
             games = api.SearchByTitle(query, 100);

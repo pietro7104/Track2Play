@@ -2,7 +2,6 @@ package Controller.GamePageManagement;
 
 import Controller.Utility;
 import Model.APIControl.APIExceptions.APIException;
-import Model.APIControl.APIImplementation;
 import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
 import Model.Game;
@@ -24,7 +23,7 @@ public class OpenGamePageServlet extends HttpServlet {
         System.out.println(id);
         Price price = (Price)request.getAttribute("price");
         request.setAttribute("price", price);
-        APIInterface api = Utility.getAPIImplementation();
+        APIInterface api = Utility.getAPI();
         try {
             Game info =  api.GetGameInfoByIsThereAnyDealID(id);
             request.setAttribute("info", info);

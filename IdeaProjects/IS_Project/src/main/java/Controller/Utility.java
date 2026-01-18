@@ -3,7 +3,6 @@ package Controller;
 import Model.APIControl.APIBridge;
 import Model.APIControl.APIInterface;
 import Model.APIControl.RefinedAPIBridge;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.nio.charset.StandardCharsets;
@@ -35,7 +34,7 @@ public class Utility {
         return hashString;
     }
 
-    public static APIInterface getAPIImplementation(){
+    public static APIInterface getAPI(){
         APIBridge bridge = new RefinedAPIBridge();
         return bridge.getAPIInterface();
     }
