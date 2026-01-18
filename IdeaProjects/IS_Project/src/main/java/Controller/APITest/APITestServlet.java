@@ -1,6 +1,7 @@
 package Controller.APITest;
 
 import Model.APIControl.*;
+import Model.APIControl.APIExceptions.APIException;
 import Model.Game;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -69,15 +70,21 @@ public class APITestServlet extends HttpServlet {
             }
         }*/
 
-        ArrayList<Game> games = api.SearchByTitle("Sonic", 100);
+        try{
+            ArrayList<Game> games = api.SearchByTitle("Sonic", 100);
 
-        for (Game game : games) {
-            System.out.println("Highest res banner: " + game.GetHighestResolutionBanner());
-            if (game.GetHighestResolutionBanner().isEmpty()){
-                for (String key : game.getAssets().keySet()){
-                    System.out.println(key + ": " + game.getAssets().get(key));
+            for (Game game : games) {
+                System.out.println(game.getTitle());
+                HashMap<String, String> assets = game.getAssets();
+                for (String asset : assets.keySet()){
+                    System.out.println(asset + ": " + assets.get(asset));
                 }
             }
         }
+        catch (APIException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
     }
 }

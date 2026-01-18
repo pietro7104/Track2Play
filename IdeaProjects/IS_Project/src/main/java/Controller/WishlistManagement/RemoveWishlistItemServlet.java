@@ -19,7 +19,7 @@ public class RemoveWishlistItemServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottieni l'ID dell'articolo da rimuovere
-        int itemId = Integer.parseInt(request.getParameter("itemId"));
+        String itemId = request.getParameter("itemId");
 
         String username = request.getParameter("username");
 

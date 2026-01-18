@@ -7,6 +7,12 @@ public class WishlistItem {
     private String name;       // Nome del gioco
     private Date addedDate;    // Data di aggiunta
 
+    public WishlistItem() {
+        username = "";
+        name = "";
+        addedDate = new Date();
+    }
+
     public WishlistItem(String username, String name, Date addedDate) {
         this.username = username;
         this.name = name;

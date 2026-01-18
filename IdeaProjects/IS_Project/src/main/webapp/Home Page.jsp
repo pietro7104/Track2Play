@@ -7,9 +7,10 @@
 <head>
     <title>Home Page</title>
 </head>
+<jsp:include page="includables/Error%20Popup.jsp"/>
 
-<jsp:include page="includables/NavBar.jsp"/>
 <body class="home-page">
+    <jsp:include page="includables/NavBar.jsp"/>
     Home Page
 </body>
 </html>

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public void addUser(String username, String password) throws SQLException {
+    public void addUser(String id, String username, String password) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("insert into Utente (Username, Password) values(?,?)");
         ps.setString(1, username);
@@ -32,7 +32,7 @@ public class UserDAO {
 
     public User getUserByUsername(String username) throws SQLException {
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement("select * from Utente where Username = '?'");
+        PreparedStatement ps = con.prepareStatement("select * from Utente where Username = ?");
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {

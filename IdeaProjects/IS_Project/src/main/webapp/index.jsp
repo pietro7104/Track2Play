@@ -6,8 +6,6 @@
     <title>Login</title>
 </head>
 <body style="background-color: #070c21; display: flex; flex-direction:column; align-items: center; justify-content: center">
-<jsp:include page="includables/Error Popup.jsp"/>
-
 <form action="APITest" method="get">
     <input class="button" type="submit" value="Test API">
 </form>

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 
 @WebServlet("/Wishlist/Add")
@@ -34,7 +35,7 @@ public class AddWishlistItemServlet extends HttpServlet {
         WishlistItem newItem = new WishlistItem();
         newItem.setName(name);
         newItem.setUsername(username);
-        item.setAddedDate(new Date());
+        newItem.setAddedDate(new Date());
 
         WishlistDAO wishlistDAO = new WishlistDAO();
 

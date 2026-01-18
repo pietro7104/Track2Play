@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
         }while (u1 != null);
 
         try {
-            userDAO.addUser(id, username, hashedPassword);
+            userDAO.addUser(Integer.toString(id), username, hashedPassword);
         }
         catch (SQLException e){
             System.out.println("SQLException: " + e.getMessage());

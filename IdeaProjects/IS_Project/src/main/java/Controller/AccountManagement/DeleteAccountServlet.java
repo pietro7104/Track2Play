@@ -26,7 +26,7 @@ public class DeleteAccountServlet extends HttpServlet {
         User toDelete;
         try{
             toDelete = userDAO.getUserByUsername(username);
-            userDAO.deleteUserByID(toDelete.getID());
+            //userDAO.deleteUserByID(toDelete.getID());
         }
         catch (SQLException e){
             Utility.addError(request, "Errore nella cancellazione dell'account");
