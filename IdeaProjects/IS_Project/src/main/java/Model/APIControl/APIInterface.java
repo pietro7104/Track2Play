@@ -11,8 +11,10 @@ public interface APIInterface {
 
     //public abstract ArrayList<String>
 
+
+
     public Shop GetShopByName(String shopName, String country, Duration maxTimeSinceLastUpdate) throws APIException;
-    //maxTimeSinceLastUpdate indica il tempo massimo dall'ultimo controllo dei dati dello shop. Se il tempo passato dall'ultimo controllo è superiore a questo valore, viene eseguita una chiamata all'API per aggiornare i dati. Lasciare null per ignorare
+    //maxTimeSinceLastUpdate indica il tempo massimo dall'ultimo controllo dei dati dello shop. Se il tempo passato dall'ultimo controllo è superiore a questo valore, viene eseguita una chiamata all'API per aggiornare i dati. Lasciare null per usare la durate default (1 giorno)
 
     public ArrayList<Game>SearchByTitle(String title, int maxResults) throws APIException; //maxResults 0-100
 

@@ -1,5 +1,6 @@
 package Controller.APITest;
 
+import Controller.Utility;
 import Model.APIControl.*;
 import Model.APIControl.APIExceptions.APIException;
 import Model.Game;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 @WebServlet("/APITest")
 public class APITestServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        APIInterface api = new APIImplementation();
+        APIInterface api = Utility.getAPIImplementation();
         /*ArrayList<String> list = new ArrayList<>();
         list.add("018d937f-42c6-70a5-a29b-9d8c2e0f7b84");
         list.add("018d937f-6128-7151-8d2e-b4a9ad2e1ce8");

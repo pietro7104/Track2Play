@@ -23,7 +23,7 @@ import java.util.Hashtable;
 public class SearchServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");
-        APIInterface api = new APIImplementation();
+        APIInterface api = Utility.getAPIImplementation();
         ArrayList<Game> games;
         try {
             games = api.SearchByTitle(query, 100);

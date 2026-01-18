@@ -24,6 +24,8 @@ public class APIImplementation implements APIInterface {
 
     private final long timeUntilTimeout = 10;
 
+    private final Duration shopsTimeUntilUpdate = Duration.ofDays(1);
+
     private String key = "";
 
     private String getKey() {
@@ -59,6 +61,7 @@ public class APIImplementation implements APIInterface {
 
 
     public Shop GetShopByName(String shopName, String country, Duration maxTimeSinceLastUpdate) throws APIException {
+        if (maxTimeSinceLastUpdate == null) maxTimeSinceLastUpdate = shopsTimeUntilUpdate;
         boolean called = false;
         HashMap<String, Shop> shopsInCountry = shopCountryHash.getOrDefault(country, null);
         if (shopsInCountry == null) {

@@ -24,7 +24,7 @@ public class OpenGamePageServlet extends HttpServlet {
         System.out.println(id);
         Price price = (Price)request.getAttribute("price");
         request.setAttribute("price", price);
-        APIInterface api = new APIImplementation();
+        APIInterface api = Utility.getAPIImplementation();
         try {
             Game info =  api.GetGameInfoByIsThereAnyDealID(id);
             request.setAttribute("info", info);

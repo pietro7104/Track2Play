@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.APIControl.APIBridge;
+import Model.APIControl.APIInterface;
+import Model.APIControl.RefinedAPIBridge;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,5 +33,10 @@ public class Utility {
             System.out.println(e.getMessage());
         }
         return hashString;
+    }
+
+    public static APIInterface getAPIImplementation(){
+        APIBridge bridge = new RefinedAPIBridge();
+        return bridge.getAPIInterface();
     }
 }
