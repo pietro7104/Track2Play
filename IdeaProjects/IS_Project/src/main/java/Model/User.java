@@ -4,14 +4,14 @@ public class User {
     int id;
     String username;
     String password;
-    String codiceISO;
+    String countryISO;
 
-    public void setCodiceISO(String codiceISO) {
-        this.codiceISO = codiceISO;
+    public void setCountryISO(String countryISO) {
+        this.countryISO = countryISO;
     }
 
-    public String getCodiceISO() {
-        return codiceISO;
+    public String getCountryISO() {
+        return countryISO;
     }
 
     public int getID() {

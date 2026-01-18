@@ -11,7 +11,8 @@ public class Database {
         if (conn == null || conn.isClosed()) {
             try{
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tracktoplay", "root", "mYsql1212");
+
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/track2play", "root", "Ema23456@");
                 return conn;
             }
             catch (SQLException e)
