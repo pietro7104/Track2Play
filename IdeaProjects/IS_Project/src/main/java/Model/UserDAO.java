@@ -26,7 +26,7 @@ public class UserDAO {
                 user.setID(rs.getInt("IdUtente"));
                 user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
-                user.setCodiceISO(rs.getString("Codice_ISO"));
+                user.setCountryISO(rs.getString("Codice_ISO"));
                 return user;
             }
             else return null;
@@ -42,7 +42,7 @@ public class UserDAO {
             user.setID(rs.getInt("IdUtente"));
             user.setUsername(rs.getString("Username"));
             user.setPassword(rs.getString("Password"));
-            user.setCodiceISO(rs.getString("Codice_ISO"));
+            user.setCountryISO(rs.getString("Codice_ISO"));
             return user;
         }
         else return null;

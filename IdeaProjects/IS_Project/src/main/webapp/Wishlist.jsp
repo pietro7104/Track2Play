@@ -17,13 +17,11 @@
 <ul>
     <% for (WishlistItem item : wishlistItems) { %>
     <li>
-        <strong><%= item.getName() %></strong>  <!-- Nome del gioco -->
-        <br>
-        Aggiunto da: <%= item.getUsername() %>  <!-- Username dell'utente -->
+        <strong><%= item.getGameTitle() %></strong>  <!-- Titolo del gioco -->
         <br>
         Aggiunto il: <%= item.getAddedDate() %>  <!-- Data di aggiunta -->
         <form action="Wishlist/Remove" method="post" style="display:inline;">
-            <input type="hidden" name="name" value="<%= item.getName() %>">
+            <input type="hidden" name="gameName" value="<%= item.getGameTitle() %>">
             <input type="hidden" name="username" value="<%= item.getUsername() %>">
             <button type="submit">Rimuovi</button>
         </form>

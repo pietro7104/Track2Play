@@ -1,7 +1,8 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
-import Model.WishlistDAO;
+import Model.User;
+import Model.WishlistItemDAO;
 import Model.WishlistItem;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,20 +22,21 @@ public class ViewWishlistServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
+        HttpSession session = request.getSession();
+        User loggedUser = (User) session.getAttribute("user");
 
-        if (username == null) {
+        if (loggedUser == null) {
             Utility.addError(request, "Devi effettuare il login per visualizzare la tua wishlist");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             return;
         }
 
-        WishlistDAO wishlistDAO = new WishlistDAO();
+        WishlistItemDAO wishlistItemDAO = new WishlistItemDAO();
 
         try {
-
-            List<WishlistItem> wishlistItems = wishlistDAO.getWishlistItems(username);
+            List<WishlistItem> wishlistItems = wishlistItemDAO.getWishlistItemsByUserId(loggedUser.getID());
+            // List<WishlistItem> wishlistItems = wishlistItemDAO.getWishlistItemsByUsername(loggedUser.getUsername());
             request.setAttribute("wishlistItems", wishlistItems);
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);

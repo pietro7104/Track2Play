@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
             u = userDAO.getUserByUsername(username);
         }
         catch (SQLException e){
+            // System.out.print(e);
             Utility.addError(request, "Errore nel login");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
@@ -46,18 +47,16 @@ public class LoginServlet extends HttpServlet {
         if (Utility.toHash(password).equals(u.getPassword())){
             // Entriamo se la password del database e quella inserita nel form di login coincidono
             HttpSession session = request.getSession();
-            session.setAttribute("user", username);
+            session.setAttribute("user", u);
             //session.setMaxInactiveInterval(60); //??
 
             RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
             rd.forward(request, response);
-            return;
         }
         else {
             Utility.addError(request, "Password incorretta");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
-            return;
         }
 
     }

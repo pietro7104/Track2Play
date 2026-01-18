@@ -3,31 +3,29 @@ package Model;
 import java.util.Date;
 
 public class WishlistItem {
-    private String username;   // Nome utente che ha aggiunto l'articolo
-    private String name;       // Nome del gioco
-    private Date addedDate;    // Data di aggiunta
+    private String gameImageURL;   // URL della copertina del gioco
+    private String gameTitle;       // Titolo del gioco
+    private Date addedDate;    // Data di aggiunta alla wishlist
+    private String gameId;
 
-    public WishlistItem(String username, String name, Date addedDate) {
-        this.username = username;
-        this.name = name;
-        this.addedDate = addedDate;
-    }
+    public WishlistItem() { }
 
     // Getter e Setter
-    public String getUsername() {
-        return username;
+
+    public String getGameId() {
+        return gameId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
-    public String getName() {
-        return name;
+    public String getGameImageURL() {
+        return gameImageURL;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGameImageURL(String gameImageURL) {
+        this.gameImageURL = gameImageURL;
     }
 
     public Date getAddedDate() {
@@ -37,6 +35,15 @@ public class WishlistItem {
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
     }
+
+    public String getGameTitle() {
+        return gameTitle;
+    }
+
+    public void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
+    }
+
 
     /*@Override
     public String toString() {
