@@ -18,7 +18,7 @@ public class UserDAO {
 
     public User getUserByID(int id) throws SQLException {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from Utente where IdUtente = ?");
+            PreparedStatement ps = con.prepareStatement("Select * from Utente where IdUtente = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -34,7 +34,7 @@ public class UserDAO {
 
     public User getUserByUsername(String username) throws SQLException {
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement("select * from Utente where Username = '?'");
+        PreparedStatement ps = con.prepareStatement("select * from Utente where Username = ?");
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
