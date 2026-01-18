@@ -59,7 +59,7 @@ public class WishlistItemDAO {
                 "SELECT G.IdGioco, G.Copertina, G.Titolo, W.Data_Aggiunta " +
                         "FROM Utente U JOIN  Wishlist W ON U.IdUtente = W.IdUtente " +
                         "JOIN Gioco G ON G.IdGioco = W.IdGioco " +
-                        "WHERE U.Username = '?'"
+                        "WHERE U.Username = ?"
         );
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
@@ -86,7 +86,7 @@ public class WishlistItemDAO {
     public void removeItemFromWishlistByGameId(int userId, String gameId) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
-                "DELETE FROM wishlist WHERE IdGioco = '?' AND IdUtente = ?"
+                "DELETE FROM wishlist WHERE IdGioco = ? AND IdUtente = ?"
         );
         ps.setString(1, gameId);
         ps.setInt(2, userId);
