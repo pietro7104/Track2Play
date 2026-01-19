@@ -1,5 +1,9 @@
 package Model;
 
+import Model.APIControl.Developer;
+import Model.APIControl.Publisher;
+import Model.APIControl.Review;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,40 +217,6 @@ public class Game {
 
     public void setEarlyAccess(boolean earlyAccess) {
         isEarlyAccess = earlyAccess;
-    }
-
-    public static class Developer{
-        public String name;
-        public int id;
-
-        public Developer(String name, int id) {
-            this.name = name;
-            this.id = id;
-        }
-    }
-
-    public static class Publisher{
-        public String name;
-        public int id;
-
-        public Publisher(String name, int id) {
-            this.name = name;
-            this.id = id;
-        }
-    }
-
-    public static class Review{
-        public float score;
-        public String source;
-        public int count;
-        public String url;
-
-        public Review(float score, String source, int count, String url) {
-            this.score = score;
-            this.source = source;
-            this.count = count;
-            this.url = url;
-        }
     }
 
     ArrayList<String> tags;

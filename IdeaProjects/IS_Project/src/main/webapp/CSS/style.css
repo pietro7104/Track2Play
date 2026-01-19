@@ -13,6 +13,11 @@ script{
     display: none;
 }
 
+.unstyled {
+    text-decoration: none;
+    color: inherit;
+}
+
 .error-message{
     color: red;
 }
@@ -183,7 +188,7 @@ script{
 .game-display img{
     aspect-ratio: 460/215;
     object-fit: cover;
-    margin: 0px;
+    margin: 0;
     z-index: -1;
 }
 
@@ -217,33 +222,56 @@ script{
     padding: 2px;
 }
 
+.addedDate-display{
+    background-color: #2A475E;
+    color: #b3b3b3;
+    padding: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    font-size: 1vw;
+    justify-content: flex-end;
+}
+
+.addedDate-display span{
+    font-size: 1vw;
+    color: #b3b3b3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
 .game-price-text{
     padding: 2px;
 }
 
 .game-page{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .game-page-left{
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .game-page-right{
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
+    margin-right: 20px;
 }
 
 .game-image{
     border: solid 2px slategray;
     display: flex;
     flex-direction: column;
-    margin: 20px;
 
-    width: 400px;
-    aspect-ratio: 460/215;
+    width: 600px;
     object-fit: cover;
 }
 
@@ -254,6 +282,8 @@ script{
     flex-direction: column;
 }
 
+
+
 .game-price-display
 {
     flex-direction: row;
@@ -262,6 +292,8 @@ script{
 
 .deal-display{
     border: solid 2px lightslategray;
+    background-color: #2A475E;
+    border-top: none;
     display: flex;
     flex-direction: row;
     padding: 5px;
@@ -270,7 +302,90 @@ script{
     white-space: nowrap;
 
     justify-content: space-between;
-    margin: 20px;
+    margin: 0 20px;
 
     width: 400px;
+}
+
+.deal-display:first-of-type{
+    border-top: solid 2px lightslategray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.deal-display:last-of-type{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.deal-display:hover{
+    background-color: #325570;
+    transition: 0.1s;
+}
+
+#deal-table-title{
+    justify-content: space-around;
+    background-color: #1f3647
+}
+
+.deal-display .game-price-display{
+    background-color: transparent;
+}
+
+.price-history .deal-display{
+    background-color: #1f3647
+}
+.price-history .deal-display:hover{
+    background-color: #1f3647
+}
+
+.tag-display{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+
+    margin: 10px 0;
+}
+
+.tag{
+    background-color: #373d62;
+    color: white;
+    padding: 2px 4px;
+    display: inline-block;
+}
+
+.review-display{
+    display: flex;
+    flex-direction: column;
+}
+
+.review{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #303240;
+    border-radius: 5px;
+    padding: 10px;
+
+    margin-bottom: 2px;
+}
+
+.review-score{
+    background-color: green;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 23px;
+    align-content: center;
+    aspect-ratio: 1;
+}
+
+.review-source{
+
+}
+
+.review-count{
+    color: #b3b3b3;
+    font-size: 1vw;
 }

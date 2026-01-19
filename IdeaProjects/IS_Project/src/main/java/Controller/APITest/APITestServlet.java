@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 @WebServlet("/APITest")
@@ -71,7 +72,7 @@ public class APITestServlet extends HttpServlet {
             }
         }*/
 
-        try{
+       /* try{
             ArrayList<Game> games = api.SearchByTitle("Sonic", 100);
 
             for (Game game : games) {
@@ -85,7 +86,11 @@ public class APITestServlet extends HttpServlet {
         catch (APIException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
-        }
+        }*/
+
+        Date d = new Date();
+
+        System.out.println(d.toString());
 
     }
 }

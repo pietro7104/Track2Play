@@ -1,5 +1,10 @@
-
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<jsp:useBean id="ourDate" class="java.util.Date"/>
+<jsp:useBean id="Utility" class="Controller.Utility"/>
+<jsp:setProperty name="ourDate" property="time" value="${ourDate.time}"/>
 
 <link rel="stylesheet" href="CSS/style.css">
 
@@ -10,11 +15,13 @@
 <body class="home-page">
     <jsp:include page="includables/NavBar.jsp"/>
 
+
     <h1>La tua collezione</h1>
     <div class="collection">
         <jsp:include page="includables/Game Display.jsp">
             <jsp:param name="image" value="images/silksong_header.jpg"/>
             <jsp:param name="game_name" value="Hollow Knight: Silksong"/>
+            <jsp:param name="addedDate" value="${Utility.dateToStringJSP(ourDate)}"/>
         </jsp:include>
 
         <jsp:include page="includables/Game Display.jsp">

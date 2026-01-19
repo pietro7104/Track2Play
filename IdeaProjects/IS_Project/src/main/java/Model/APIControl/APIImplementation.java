@@ -174,7 +174,7 @@ public class APIImplementation implements APIInterface {
         }catch (JSONException _){};
 
 
-        ArrayList<Game.Developer> developers = new ArrayList<>();
+        ArrayList<Developer> developers = new ArrayList<>();
         try{
             JSONArray developersJSONArray = jsonObject.getJSONArray("developers");
             if (developersJSONArray != null){
@@ -184,7 +184,7 @@ public class APIImplementation implements APIInterface {
                         try{
                             String developerName = developer.getString("name");
                             int developerId = developer.getInt("id");
-                            developers.add(new Game.Developer(developerName, developerId));
+                            developers.add(new Developer(developerName, developerId));
                         }
                         catch (Exception e){
                             continue;
@@ -197,7 +197,7 @@ public class APIImplementation implements APIInterface {
 
 
 
-        ArrayList<Game.Publisher> publishers = new ArrayList<>();
+        ArrayList<Publisher> publishers = new ArrayList<>();
         try{
             JSONArray publishersJSONArray = jsonObject.getJSONArray("publishers");
             if (publishersJSONArray != null){
@@ -207,7 +207,7 @@ public class APIImplementation implements APIInterface {
                         try{
                             String publisherName = publisher.getString("name");
                             int publisherId = publisher.getInt("id");
-                            publishers.add(new Game.Publisher(publisherName, publisherId));
+                            publishers.add(new Publisher(publisherName, publisherId));
                         }
                         catch (Exception e){
                             continue;
@@ -222,7 +222,7 @@ public class APIImplementation implements APIInterface {
 
 
 
-        ArrayList<Game.Review> reviews = new ArrayList<>();
+        ArrayList<Review> reviews = new ArrayList<>();
         try{
             JSONArray reviewsJSONArray = jsonObject.getJSONArray("reviews");
             if (reviewsJSONArray != null){
@@ -234,7 +234,7 @@ public class APIImplementation implements APIInterface {
                             String source = review.getString("source");
                             int count = review.getInt("count");
                             String reviewUrl = review.getString("url");
-                            reviews.add(new Game.Review(score, source, count, reviewUrl));
+                            reviews.add(new Review(score, source, count, reviewUrl));
                         }
                         catch (Exception e){
                             continue;
@@ -430,22 +430,16 @@ public class APIImplementation implements APIInterface {
                             shopName = shop.getString("name");
                         }catch (JSONException _){};
 
-
-                        float amount = -1;
-                        String currency = "";
+                        Cost price = null;
                         try{
-                            JSONObject price = deal.getJSONObject("price");
-                            amount = price.getFloat("amount");
-                            currency = price.getString("currency");
+                            JSONObject priceJSON = deal.getJSONObject("price");
+                            price = new Cost(priceJSON.getFloat("amount"), priceJSON.getString("currency"));
                         }catch (JSONException _){}
 
-
-                        float regularAmount = -1;
-                        String regularCurrency = "";
+                        Cost regularPrice = null;
                         try{
-                            JSONObject regularPrice = deal.getJSONObject("regular");
-                            regularAmount = regularPrice.getFloat("amount");
-                            regularCurrency = regularPrice.getString("currency");
+                            JSONObject regularPriceJSON = deal.getJSONObject("regular");
+                            regularPrice = new Cost(regularPriceJSON.getFloat("amount"), regularPriceJSON.getString("currency"));
                         }catch (JSONException _){};
 
                         float cut = 0;
@@ -459,12 +453,10 @@ public class APIImplementation implements APIInterface {
                         } catch (Exception _){}
 
 
-                        float storeLowAmount = -1;
-                        String storeLowCurrency = "";
+                        Cost storeLow = null;
                         try{
-                            JSONObject storeLow = deal.getJSONObject("storeLow");
-                            storeLowAmount = storeLow.getFloat("amount");
-                            storeLowCurrency = storeLow.getString("currency");
+                            JSONObject storeLowJSON = deal.getJSONObject("storeLow");
+                            storeLow = new Cost(storeLowJSON.getFloat("amount"), storeLowJSON.getString("currency"));
                         }catch (Exception _){}
 
                         String flag = "";
@@ -522,7 +514,7 @@ public class APIImplementation implements APIInterface {
                             gameUrl = deal.getString("url");
                         }catch (Exception _){}
 
-                        Deal d = new Deal(shopID, shopName, new Cost(amount, currency), new Cost(regularAmount, regularCurrency), cut, voucher, new Cost(storeLowAmount, storeLowCurrency), flag, drms, platforms, timestamp, expiry, gameUrl);
+                        Deal d = new Deal(shopID, shopName, price, regularPrice, cut, voucher, storeLow, flag, drms, platforms, timestamp, expiry, gameUrl);
                         deals.add(d);
                     }
                 }

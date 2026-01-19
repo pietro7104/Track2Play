@@ -6,7 +6,10 @@ import Model.APIControl.RefinedAPIBridge;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Utility {
 
@@ -37,5 +40,17 @@ public class Utility {
     public static APIInterface getAPI(){
         APIBridge bridge = new RefinedAPIBridge();
         return bridge.getAPIInterface();
+    }
+
+    public static String dateToString(Date date){
+        String pattern = "dd/MM/yyyy";
+
+        DateFormat df = new SimpleDateFormat(pattern);
+
+        return df.format(date);
+    }
+
+    public String dateToStringJSP(Date date){
+        return dateToString(date);
     }
 }
