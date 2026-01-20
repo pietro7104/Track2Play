@@ -68,4 +68,16 @@ public class APIStub implements APIInterface{
         shopIDs.add(0);
         return shopIDs;
     }
+
+    public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
+        ArrayList<Game> games = new ArrayList<>();
+        games.add(getTestGame());
+        return games;
+    }
+
+    public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
+        HashMap<Game, Price> deals = new HashMap<>();
+        deals.put(getTestGame(), getTestPrice());
+        return deals;
+    }
 }

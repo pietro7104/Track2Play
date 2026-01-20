@@ -553,7 +553,7 @@ public class APIImplementation implements APIInterface {
 
         HttpResponse<String> response = GETRequest(url);
 
-        if (response == null){
+        if (response == null || response.statusCode() != 200){
             throw new APIException("API response is null");
         }
         //System.out.println(response.body());
@@ -587,5 +587,68 @@ public class APIImplementation implements APIInterface {
             shopIDs.add(shop.getId());
         }
         return shopIDs;
+    }
+
+    public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
+        offset = Math.max(0, offset);
+        limit = Math.clamp(limit, 1, 200);
+        if (!sort.equals("-cut") && !sort.equals("price")) sort= "-cut";
+        String url = "https://api.isthereanydeal.com/deals/v2?=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature;
+        StringBuilder shops = new StringBuilder();
+        int i = 0;
+        for (Integer shopID : shopIDs) {
+            i++;
+            shops.append(shopID);
+            if (i < shopIDs.size()) {
+                shops.append(",");
+            }
+        }
+        url += "&shops=" + shops;
+
+
+        HttpResponse<String> response = GETRequest(url);
+
+        if (response == null || response.statusCode() != 200){
+            throw new APIException("Errore nella risposta");
+        }
+
+        JSONObject jsonResponse = new JSONObject(response.body());
+        JSONArray list = jsonResponse.getJSONArray("deals");
+
+        ArrayList<Game> deals = new ArrayList<>();
+        for (int j = 0; j < list.length(); j++) {
+            try{
+                JSONObject deal = list.getJSONObject(j);
+                String dealID = deal.getString("id");
+                String dealTitle = deal.getString("title");
+                String dealType = deal.getString("type");
+                boolean dealMature = deal.getBoolean("mature");
+                JSONObject assetsJSON = deal.getJSONObject("assets");
+                HashMap<String, String> assets = new HashMap<>();
+                if (assetsJSON != null){
+                    for (String key : assetsJSON.keySet()) {
+                        String assetUrl = assetsJSON.getString(key);
+                        if (assetUrl != null) assets.put(key, assetUrl);
+                    }
+                }
+                Game game = new Game(dealID, dealTitle, dealType, dealMature, assets);
+                deals.add(game);
+            }catch (Exception _){}
+        }
+        return deals;
+    }
+
+    public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException {
+        ArrayList<Game> games = GetGamesWithDeals(country, offset, limit, sort, nondeals, mature, shopIDs, filter);
+        ArrayList<String> gameIDs = new ArrayList<>();
+        for (Game game : games) {
+            gameIDs.add(game.getIsThereAnyDealID());
+        }
+        HashMap<String, Price> prices = GetGamesPrices(gameIDs, shopIDs, country, false, 100, true);
+        HashMap<Game, Price> deals = new HashMap<>();
+        for (Game game : games) {
+            deals.put(game, prices.remove(game.getIsThereAnyDealID()));
+        }
+        return deals;
     }
 }
