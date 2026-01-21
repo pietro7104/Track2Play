@@ -8,9 +8,9 @@
     <title>Wishlist</title>
 </head>
 
-<jsp:include page="includables/Error%20Popup.jsp"/>
+<jsp:include page="includables/Error Popup.jsp"/>
 
-<body class="home-page">
+<body>
 
 <jsp:include page="includables/NavBar.jsp"/>
 
@@ -18,30 +18,26 @@
 
 <c:choose>
 
-    <!-- Wishlist vuota -->
     <c:when test="${requestScope.wishlistItems == null or requestScope.wishlistItems.size() le 0}">
         <div>Nessun gioco nella wishlist</div>
     </c:when>
 
-    <!-- Wishlist con elementi -->
     <c:otherwise>
         <div class="collection">
 
             <c:forEach items="${requestScope.wishlistItems}" var="item">
 
 
-                <jsp:include page="includables/Game%20Display.jsp">
-                    <jsp:param name="gameID" value="${item.gameId}"/>
-                    <jsp:param name="image" value="${item.gameImageURL}"/>
-                    <jsp:param name="game_name" value="${item.gameTitle}"/>
-                    <jsp:param name="addedDate"
-                               value="${item.addedDate}">
-                    </jsp:param>
+                <jsp:include page="includables/Game Display.jsp">
+                    <jsp:param name="gameID" value="${item.getgameId()}"/>
+                    <jsp:param name="image" value="${item.getGameImageURL()}"/>
+                    <jsp:param name="game_name" value="${item.getGameTitle()}"/>
+                    <jsp:param name="addedDate" value="${item.getAddedDate()}"/>
                 </jsp:include>
 
                 <!-- Bottone rimozione -->
                 <form action="Wishlist/Remove" method="post" style="text-align:center;">
-                    <input type="hidden" name="gameItemId" value="${item.gameId}">
+                    <input type="hidden" name="gameItemId" value="${item.getgameId()}">
                     <button type="submit">Rimuovi dalla wishlist</button>
                 </form>
 
