@@ -1,34 +1,52 @@
-<%@ page import="java.util.List" %>
-<%@ page import="Model.WishlistItem" %>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html lang="it">
+<link rel="stylesheet" href="CSS/style.css">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>La tua Wishlist</title>
+    <title>Wishlist</title>
 </head>
+
+<jsp:include page="includables/Error Popup.jsp"/>
+
 <body>
 
-<h2>Ciao <%= username %>, ecco la tua Wishlist</h2>
+<jsp:include page="includables/NavBar.jsp"/>
 
-<% if (wishlistItems == null || wishlistItems.isEmpty()) { %>
-<p>La tua wishlist è vuota.</p>
-<% } else { %>
-<ul>
-    <% for (WishlistItem item : wishlistItems) { %>
-    <li>
-        <strong><%= item.getGameTitle() %></strong>  <!-- Titolo del gioco -->
-        <br>
-        Aggiunto il: <%= item.getAddedDate() %>  <!-- Data di aggiunta -->
-        <form action="Wishlist/Remove" method="post" style="display:inline;">
-            <input type="hidden" name="gameName" value="<%= item.getGameTitle() %>">
-            <input type="hidden" name="username" value="<%= item.getUsername() %>">
-            <button type="submit">Rimuovi</button>
-        </form>
-    </li>
-    <% } %>
-</ul>
-<% } %>
+<div style="font-size: 30px">La tua wishlist</div>
+
+<c:choose>
+
+    <c:when test="${requestScope.wishlistItems == null or requestScope.wishlistItems.size() le 0}">
+        <div>Nessun gioco nella wishlist</div>
+    </c:when>
+
+    <c:otherwise>
+        <div class="collection">
+
+            <c:forEach items="${requestScope.wishlistItems}" var="item">
+
+
+                <jsp:include page="includables/Game Display.jsp">
+                    <jsp:param name="gameID" value="${item.getgameId()}"/>
+                    <jsp:param name="image" value="${item.getGameImageURL()}"/>
+                    <jsp:param name="game_name" value="${item.getGameTitle()}"/>
+                    <jsp:param name="addedDate" value="${item.getAddedDate()}"/>
+                </jsp:include>
+
+                <!-- Bottone rimozione -->
+                <form action="Wishlist/Remove" method="post" style="text-align:center;">
+                    <input type="hidden" name="gameItemId" value="${item.getgameId()}">
+                    <button type="submit">Rimuovi dalla wishlist</button>
+                </form>
+
+            </c:forEach>
+
+        </div>
+    </c:otherwise>
+
+</c:choose>
 
 </body>
 </html>
