@@ -269,6 +269,7 @@ public class Game {
 
 
     public String GetHighestResolutionBanner(){
+
         String highestResolution = "";
         int resolution = 0;
         for (String key : assets.keySet()) {

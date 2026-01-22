@@ -35,4 +35,5 @@ public interface APIInterface {
     public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException;
 
     public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException;
+
 }

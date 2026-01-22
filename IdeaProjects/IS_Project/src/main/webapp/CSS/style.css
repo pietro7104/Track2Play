@@ -372,6 +372,10 @@ script{
     margin-bottom: 2px;
 }
 
+.review:hover{
+    background-color: #414457;
+}
+
 .review-score{
     background-color: green;
     border-radius: 5px;

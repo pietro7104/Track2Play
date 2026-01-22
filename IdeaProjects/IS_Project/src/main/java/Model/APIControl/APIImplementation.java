@@ -118,14 +118,18 @@ public class APIImplementation implements APIInterface {
                 catch (JSONException e){
                     mature = false;
                 }
-                JSONObject assetsJSON = jsonObject.getJSONObject("assets");
+
                 HashMap<String, String> assets = new HashMap<>();
-                if (assetsJSON != null){
-                    for (String key : assetsJSON.keySet()) {
-                        String assetUrl = assetsJSON.getString(key);
-                        if (assetUrl != null) assets.put(key, assetUrl);
+                try{
+                    JSONObject assetsJSON = jsonObject.getJSONObject("assets");
+                    if (assetsJSON != null){
+                        for (String key : assetsJSON.keySet()) {
+                            String assetUrl = assetsJSON.getString(key);
+                            if (assetUrl != null) assets.put(key, assetUrl);
+                        }
                     }
-                }
+                }catch (JSONException _){}
+
                 Game game = new Game(id, gameTitle, type, mature, assets);
                 games.add(game);
             }
@@ -145,7 +149,10 @@ public class APIImplementation implements APIInterface {
         }
         JSONObject jsonObject = new JSONObject(response.body());
         String id = jsonObject.getString("id");
-        int appid = jsonObject.getInt("appid");
+        int appid = -1;
+        try{
+            appid = jsonObject.getInt("appid");
+        }catch (Exception _){}
         String slug = jsonObject.getString("slug");
         String title = jsonObject.getString("title");
         String type = "";
