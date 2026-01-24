@@ -7,12 +7,14 @@ import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
 import Model.APIControl.Shop;
 import Model.Game;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ import java.util.LinkedHashMap;
 @WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String countryCode;
+        if (user == null)  countryCode = "IT";
+        else countryCode = user.getCountryISO();
+
         String query = request.getParameter("query");
         APIInterface api = Utility.getAPI();
         ArrayList<Game> games;
@@ -45,7 +53,7 @@ public class SearchServlet extends HttpServlet {
 
         ArrayList<Shop> shops = null;
         try {
-            shops = api.GetShops("IT");
+            shops = api.GetShops(countryCode);
         } catch (APIException e) {
             Utility.addError(request, "Errore nella ricerca");
             OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
@@ -61,7 +69,7 @@ public class SearchServlet extends HttpServlet {
         }
 
         try {
-            LinkedHashMap<String, Price> prices = api.GetGamesPrices(ids, shopIDs, "IT", false, 0, true);
+            LinkedHashMap<String, Price> prices = api.GetGamesPrices(ids, shopIDs, countryCode, false, 0, true);
 
             request.setAttribute("prices", prices);
             request.setAttribute("search_results", games);

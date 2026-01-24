@@ -6,12 +6,14 @@ import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
 import Model.Game;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +22,12 @@ import java.util.HashMap;
 @WebServlet("/OpenGamePage")
 public class OpenGamePageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String countryCode;
+        if (user == null)  countryCode = "IT";
+        else countryCode = user.getCountryISO();
+
         String id = request.getParameter("itadid");
         System.out.println(id);
         Price price = (Price)request.getAttribute("price");
@@ -41,7 +49,7 @@ public class OpenGamePageServlet extends HttpServlet {
             try{
                 ArrayList<String> ids = new ArrayList<>();
                 ids.add(id);
-                HashMap<String, Price> prices = api.GetGamesPrices(ids, api.GetShopIDs("IT"), "IT", false, 0, true);
+                HashMap<String, Price> prices = api.GetGamesPrices(ids, api.GetShopIDs(countryCode), countryCode, false, 0, true);
                 price = prices.getOrDefault(id, null);
                 if (price == null) {
                     Utility.addError(request, "Errore nell'ottenimento dei prezzi del gioco");

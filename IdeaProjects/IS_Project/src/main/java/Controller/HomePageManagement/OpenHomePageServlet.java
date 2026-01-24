@@ -6,12 +6,14 @@ import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
 import Model.Game;
+import Model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,9 +24,15 @@ import java.util.LinkedHashMap;
 @WebServlet("/OpenHomePage")
 public class OpenHomePageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String countryCode;
+        if (user == null)  countryCode = "IT";
+        else countryCode = user.getCountryISO();
+
         APIInterface api = Utility.getAPI();
         try {
-            LinkedHashMap<Game, Price> gamePriceHashmap = api.GetDeals("IT", 0, 50, "-hot", false, false, api.GetShopIDs("IT"), "");
+            LinkedHashMap<Game, Price> gamePriceHashmap = api.GetDeals(countryCode, 0, 50, "-hot", false, false, api.GetShopIDs(countryCode), "");
             ArrayList<Game> top;
             ArrayList<Game> games = new ArrayList<>();
             LinkedHashMap<String, Price> prices = new LinkedHashMap<>();
