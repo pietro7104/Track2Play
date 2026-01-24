@@ -31,7 +31,6 @@
                         <jsp:param name="priceInfo" value="${requestScope.prices.get(game.getIsThereAnyDealID())}"/>
                     </jsp:include>
                 </c:if>
-
             </c:forEach>
         </div>
     </c:otherwise>

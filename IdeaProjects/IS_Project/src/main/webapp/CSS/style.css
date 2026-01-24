@@ -3,7 +3,8 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Times New Roman", Times, serif;
-    font-size: 1.2vw;
+    //font-size: 1.2vw;
+    font-size: 15px;
 }
 html{
 
@@ -18,8 +19,22 @@ script{
     color: inherit;
 }
 
+.link {
+    color: #0000EE;
+}
+
+.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .error-message{
     color: red;
+}
+
+.error-list{
+    margin-left: 0;
+    padding-left: 15px;
 }
 
 .button{
@@ -91,7 +106,7 @@ script{
     border: none;
     background: none;
     padding: 10px;
-    font-size: 1.2vw;
+    font-size: 15px;
 }
 
 .navbar_button:hover{
@@ -153,19 +168,36 @@ script{
 }
 
 .home-page h1{
-    font-size: 3vw;
+    font-size: 35px;
     padding: 10px;
 
     text-decoration: underline;
 }
 
+.top-games{
+    display: flex;
+    justify-content: space-around;
+    background-color: dodgerblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    flex-wrap: wrap;
+}
+
 .collection{
     padding: 10px;
-    display: grid;
-    row-gap: 20px;
-    column-gap: 0;
+    //display: grid;
+    //row-gap: 20px;
+    //column-gap: 0;
 
-    grid-template-columns: repeat( auto-fit, minmax(0px, 250px) ); /*non so che significa*/
+    //grid-template-columns: repeat( auto-fit, minmax(0px, 250px) ); /*non so che significa*/
+
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-left: 15px;
 }
 
 
@@ -176,8 +208,12 @@ script{
 
     border: solid lightslategray 2px;
 
+    margin: 10px;
+
     transform-origin: center;
+    transition: 0.1s;
 }
+
 
 .game-display:hover{
     transition: 0.1s;
@@ -185,11 +221,15 @@ script{
     cursor: pointer;
 }
 
+.top-games .game-display{
+    width: 300px;
+}
+
 .game-display img{
     aspect-ratio: 460/215;
     object-fit: cover;
     margin: 0;
-    z-index: -1;
+    z-index: 0;
 }
 
 .game-display .game-name-display{
@@ -230,12 +270,12 @@ script{
     text-overflow: ellipsis;
     white-space: nowrap;
     display: flex;
-    font-size: 1vw;
+    font-size: 12px;
     justify-content: flex-end;
 }
 
 .addedDate-display span{
-    font-size: 1vw;
+    font-size: 12px;
     color: #b3b3b3;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -391,5 +431,5 @@ script{
 
 .review-count{
     color: #b3b3b3;
-    font-size: 1vw;
+    font-size: 12px;
 }

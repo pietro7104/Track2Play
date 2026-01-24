@@ -1,5 +1,6 @@
 package Controller.AccountManagement;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +18,10 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.invalidate();
 
-        RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-        rd.forward(request, response);
+        OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+        openHomePageServlet.doGet(request, response);
+        return;
+        /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+        rd.forward(request, response);*/
     }
 }

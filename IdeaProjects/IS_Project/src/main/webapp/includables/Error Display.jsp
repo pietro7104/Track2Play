@@ -20,7 +20,7 @@
               </c:when>
 
               <c:otherwise>
-                  <ul class="error_list">
+                  <ul class="error-list">
                       <c:forEach items="${requestScope.error_list}" var="e">
                           <li class="error-message">${e}</li>
                       </c:forEach>

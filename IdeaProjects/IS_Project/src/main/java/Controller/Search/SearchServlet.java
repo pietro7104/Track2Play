@@ -1,5 +1,6 @@
 package Controller.Search;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
@@ -27,9 +29,12 @@ public class SearchServlet extends HttpServlet {
             games = api.SearchByTitle(query, 100);
         }
         catch (APIException e) {
+
             Utility.addError(request, "Errore nella ricerca");
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
+            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);*/
             return;
         }
 
@@ -43,8 +48,10 @@ public class SearchServlet extends HttpServlet {
             shops = api.GetShops("IT");
         } catch (APIException e) {
             Utility.addError(request, "Errore nella ricerca");
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
+            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);*/
             return;
         }
         ArrayList<Integer> shopIDs = new ArrayList<>();
@@ -54,7 +61,7 @@ public class SearchServlet extends HttpServlet {
         }
 
         try {
-            HashMap<String, Price> prices = api.GetGamesPrices(ids, shopIDs, "IT", false, 0, true);
+            LinkedHashMap<String, Price> prices = api.GetGamesPrices(ids, shopIDs, "IT", false, 0, true);
 
             request.setAttribute("prices", prices);
             request.setAttribute("search_results", games);
@@ -63,11 +70,15 @@ public class SearchServlet extends HttpServlet {
         }
         catch (APIException e){
             Utility.addError(request, "Errore nella ricerca");
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
+            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);*/
+            return;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("Search Result Page.jsp");
         rd.forward(request, response);
+        return;
     }
 }

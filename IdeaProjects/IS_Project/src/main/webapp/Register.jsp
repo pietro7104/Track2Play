@@ -35,8 +35,10 @@
     <div>
         Hai già un account? <a href="index.jsp">Accedi</a>
         <br/>
-        oppure <a href="Home Page.jsp">naviga come ospite</a>
+        oppure <a class="link" onclick="document.getElementById('open-home-page').submit()">naviga come ospite</a>
     </div>
+    <form id="open-home-page" action="OpenHomePage" method="get">
+    </form>
 </fieldset>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package Controller.AccountManagement;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
@@ -50,8 +51,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", u);
             //session.setMaxInactiveInterval(60); //??
 
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
+            return;
+            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);*/
         }
         else {
             Utility.addError(request, "Password incorretta");

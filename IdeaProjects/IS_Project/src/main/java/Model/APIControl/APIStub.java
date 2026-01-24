@@ -6,6 +6,7 @@ import Model.Game;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class APIStub implements APIInterface{
 
@@ -39,18 +40,18 @@ public class APIStub implements APIInterface{
         return getTestGame();
     }
 
-    public HashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException
+    public LinkedHashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException
     {
-        HashMap<String, ArrayList<String>> gamesIDsOnShop = new HashMap<>();
+        LinkedHashMap<String, ArrayList<String>> gamesIDsOnShop = new LinkedHashMap<>();
         ArrayList<String> ids = new ArrayList<>();
         ids.add("test id");
         gamesIDsOnShop.put("test shop", ids);
         return gamesIDsOnShop;
     }
 
-    public HashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException
+    public LinkedHashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException
     {
-        HashMap<String, Price> gamesPrices = new HashMap<>();
+        LinkedHashMap<String, Price> gamesPrices = new LinkedHashMap<>();
         gamesPrices.put("test id", getTestPrice());
         return gamesPrices;
     }
@@ -75,8 +76,8 @@ public class APIStub implements APIInterface{
         return games;
     }
 
-    public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
-        HashMap<Game, Price> deals = new HashMap<>();
+    public LinkedHashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
+        LinkedHashMap<Game, Price> deals = new LinkedHashMap<>();
         deals.put(getTestGame(), getTestPrice());
         return deals;
     }

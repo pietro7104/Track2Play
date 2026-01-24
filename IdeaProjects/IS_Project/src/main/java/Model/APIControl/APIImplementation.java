@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class APIImplementation implements APIInterface {
 
@@ -43,9 +44,12 @@ public class APIImplementation implements APIInterface {
         return null;
     }
 
-    HashMap<String, Shop> shopsHash = new HashMap<>();
+    static HashMap<String, Shop> shopsHash = new HashMap<>();
 
-    HashMap<String, HashMap<String, Shop>> shopCountryHash = new HashMap<>();
+    static HashMap<String, HashMap<String, Shop>> shopCountryHash = new HashMap<>();
+
+    static LinkedHashMap<Game, Price> deals = new LinkedHashMap<>();
+    static ZonedDateTime soonestExpiry;
 
     private HttpResponse<String> GETRequest(String url) throws APIException {
         try (HttpClient client = HttpClient.newHttpClient()) {
@@ -321,7 +325,7 @@ public class APIImplementation implements APIInterface {
         else return null;
     }
 
-    public HashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException //Ottiene gli ID di una lista di giochi su un negozio a scelta a partire dall'ID di IsThereAnyDeal, alcuni giochi possono avere più id (es. se sono in bundle esce anche l'id del bundle) per questo il risultato è un array di array
+    public LinkedHashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException //Ottiene gli ID di una lista di giochi su un negozio a scelta a partire dall'ID di IsThereAnyDeal, alcuni giochi possono avere più id (es. se sono in bundle esce anche l'id del bundle) per questo il risultato è un array di array
     {
         try (HttpClient client = HttpClient.newHttpClient()) {
             String url = "https://api.isthereanydeal.com/lookup/shop/" + shopID +"/id/v1?key=" + getKey();
@@ -336,7 +340,7 @@ public class APIImplementation implements APIInterface {
             HttpResponse<String> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .join();
 
-            HashMap<String, ArrayList<String>> ids = new HashMap<>();
+            LinkedHashMap<String, ArrayList<String>> ids = new LinkedHashMap<>();
             JSONObject jsonObject = new JSONObject(response.body());
 
 
@@ -359,7 +363,7 @@ public class APIImplementation implements APIInterface {
         }
     }
 
-    private HashMap<String, Price> GetGamesPricesHelper(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException {
+    private LinkedHashMap<String, Price> GetGamesPricesHelper(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException {
         try (HttpClient client = HttpClient.newHttpClient()) {
             String url = "https://api.isthereanydeal.com/games/prices/v3";
             url += "?key=" + getKey();
@@ -392,7 +396,7 @@ public class APIImplementation implements APIInterface {
             //System.out.println(response.body());
 
             JSONArray priceJSONArray = new JSONArray(response.body());
-            HashMap<String, Price> prices = new HashMap<>();
+            LinkedHashMap<String, Price> prices = new LinkedHashMap<>();
             for (i = 0; i < priceJSONArray.length(); i++) {
                 JSONObject jsonObject = priceJSONArray.getJSONObject(i);
                 String id = jsonObject.getString("id");
@@ -510,7 +514,7 @@ public class APIImplementation implements APIInterface {
                         String expiryString = "";
                         ZonedDateTime expiry = null;
                         try{
-                            expiryString = deal.getString("expiry") != null ? deal.getString("expiry") : "";
+                            expiryString = deal.getString("expiry");
                             expiry = ZonedDateTime.parse(expiryString);
                         }
                         catch (Exception _){}
@@ -536,19 +540,19 @@ public class APIImplementation implements APIInterface {
         }
     }
 
-    public HashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException {
+    public LinkedHashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException {
         int chunk = 200;
-        ArrayList<HashMap<String, Price>> hashMaps = new ArrayList<>();
+        ArrayList<LinkedHashMap<String, Price>> hashMaps = new ArrayList<>();
         for(int i=0; i < isThereAnyDealIDs.size(); i+=chunk){
             ArrayList<String> subArray = new ArrayList<String>(isThereAnyDealIDs.subList(i, Math.min(isThereAnyDealIDs.size(), i+chunk)));
-            HashMap<String, Price> result = GetGamesPricesHelper(subArray, shopIDs, country, onlyDeals, capacity, vouchers);
+            LinkedHashMap<String, Price> result = GetGamesPricesHelper(subArray, shopIDs, country, onlyDeals, capacity, vouchers);
 
             if (result != null){
                 hashMaps.add(result);
             }
         }
-        HashMap<String, Price> prices = new HashMap<>();
-        for (HashMap<String, Price> hashMap : hashMaps){
+        LinkedHashMap<String, Price> prices = new LinkedHashMap<>();
+        for (LinkedHashMap<String, Price> hashMap : hashMaps){
             prices.putAll(hashMap);
         }
         return prices;
@@ -599,8 +603,8 @@ public class APIImplementation implements APIInterface {
     public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
         offset = Math.max(0, offset);
         limit = Math.clamp(limit, 1, 200);
-        if (!sort.equals("-cut") && !sort.equals("price")) sort= "-cut";
-        String url = "https://api.isthereanydeal.com/deals/v2?=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature;
+        String url = "https://api.isthereanydeal.com/deals/v2?country=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature + "&key=" + getKey();
+        System.out.println(url);
         StringBuilder shops = new StringBuilder();
         int i = 0;
         for (Integer shopID : shopIDs) {
@@ -620,7 +624,7 @@ public class APIImplementation implements APIInterface {
         }
 
         JSONObject jsonResponse = new JSONObject(response.body());
-        JSONArray list = jsonResponse.getJSONArray("deals");
+        JSONArray list = jsonResponse.getJSONArray("list");
 
         ArrayList<Game> deals = new ArrayList<>();
         for (int j = 0; j < list.length(); j++) {
@@ -645,16 +649,27 @@ public class APIImplementation implements APIInterface {
         return deals;
     }
 
-    public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException {
+    public LinkedHashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException {
+
+        if (!deals.keySet().isEmpty() && soonestExpiry.isAfter(ZonedDateTime.now())) {
+            return deals;
+        }
+
         ArrayList<Game> games = GetGamesWithDeals(country, offset, limit, sort, nondeals, mature, shopIDs, filter);
         ArrayList<String> gameIDs = new ArrayList<>();
         for (Game game : games) {
             gameIDs.add(game.getIsThereAnyDealID());
         }
-        HashMap<String, Price> prices = GetGamesPrices(gameIDs, shopIDs, country, false, 100, true);
-        HashMap<Game, Price> deals = new HashMap<>();
+        HashMap<String, Price> prices = GetGamesPrices(gameIDs, shopIDs, country, true, 100, false);
+        LinkedHashMap<Game, Price> deals = new LinkedHashMap<>();
         for (Game game : games) {
-            deals.put(game, prices.remove(game.getIsThereAnyDealID()));
+            deals.put(game, prices.get(game.getIsThereAnyDealID()));
+        }
+
+        APIImplementation.deals = deals;
+        for (String key : prices.keySet()){
+            Deal d = prices.get(key).GetBestDeal();
+            if (soonestExpiry == null || (d.getExpiry() != null && d.getExpiry().isBefore(soonestExpiry))) soonestExpiry = d.getExpiry();
         }
         return deals;
     }

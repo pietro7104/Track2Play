@@ -1,5 +1,6 @@
 package Controller.GamePageManagement;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
@@ -29,9 +30,11 @@ public class OpenGamePageServlet extends HttpServlet {
             request.setAttribute("info", info);
         } catch (APIException e) {
             Utility.addError(request, "Errore nell'ottenimento delle info del gioco");
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
             return;
+            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);*/
         }
 
         if (price == null) {

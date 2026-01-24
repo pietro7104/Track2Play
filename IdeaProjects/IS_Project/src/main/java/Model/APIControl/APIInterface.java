@@ -6,6 +6,7 @@ import Model.Game;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public interface APIInterface {
 
@@ -22,9 +23,9 @@ public interface APIInterface {
 
     public Game GetGameInfoBySteamID(String steamID) throws APIException;
 
-    public HashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException;//Ottiene gli ID di una lista di giochi su un negozio a scelta a partire dall'ID di IsThereAnyDeal, alcuni giochi possono avere più id (es. se sono in bundle esce anche l'id del bundle)
+    public LinkedHashMap<String, ArrayList<String>> GetGamesIDsOnShop(ArrayList<String> isThereAnyDealIDs, int shopID) throws APIException;//Ottiene gli ID di una lista di giochi su un negozio a scelta a partire dall'ID di IsThereAnyDeal, alcuni giochi possono avere più id (es. se sono in bundle esce anche l'id del bundle)
 
-    public HashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException; //massimo 200 giochi alla volta. country = codice di due lettere (ISO 3166-1 alpha-2) .capacità = numero di prezzi per gioco, impostare a 0 per nessun limite. onlyDeals = true restituisce solo prezzi scontati
+    public LinkedHashMap<String, Price> GetGamesPrices(ArrayList<String> isThereAnyDealIDs, ArrayList<Integer> shopIDs, String country, boolean onlyDeals, int capacity, boolean vouchers) throws APIException; //massimo 200 giochi alla volta. country = codice di due lettere (ISO 3166-1 alpha-2) .capacità = numero di prezzi per gioco, impostare a 0 per nessun limite. onlyDeals = true restituisce solo prezzi scontati
 
     //public abstract ArrayList<Price> GetGamesPriceOverview();
 
@@ -34,6 +35,6 @@ public interface APIInterface {
 
     public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException;
 
-    public HashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException;
+    public LinkedHashMap<Game, Price> GetDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException;
 
 }

@@ -12,9 +12,9 @@
 
 <html>
 <header class="navbar" style="align-items: center">
-    <a href="Home Page.jsp">
-        <button class="navbar_button">Home</button>
-    </a>
+    <form id="open-home-page" action="OpenHomePage" method="get">
+        <button class="navbar_button" onclick="document.getElementById('open-home-page').submit()">Home</button>
+    </form>
 
     <div>
         <form action="Search" method="get">
