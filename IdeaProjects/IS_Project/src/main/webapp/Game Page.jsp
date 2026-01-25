@@ -2,11 +2,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link rel="stylesheet" href="CSS/style.css">
 
-<jsp:useBean id="api" class="Model.APIControl.APIImplementation"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <html>
 
 
@@ -49,7 +51,9 @@
     <div class="review-display">
       <c:forEach var="review" items="${requestScope.info.reviews}">
         <a class="unstyled review" <c:if test="${review.url != null}">href="${review.url}"</c:if>>
-          <span class="review-score">${review.score}</span>
+          <jsp:include page="includables/Review%20Score.jsp">
+            <jsp:param name="score" value="${review.score}"/>
+          </jsp:include>
           <div style="display: flex; flex-direction: column; align-items: flex-end">
             <span class="review-source">${review.source}</span>
             <span class="review-count">${review.count} reviews</span>

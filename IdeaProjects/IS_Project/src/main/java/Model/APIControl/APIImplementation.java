@@ -29,19 +29,13 @@ public class APIImplementation implements APIInterface {
 
     private String key = "";
 
-    private String getKey() {
+    private String getKey() throws FileNotFoundException, IOException {
         if (!key.isEmpty()) return key;
-        try{
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("..\\ITADkey.txt"));
-            key = bufferedReader.readLine();
-            return key;
-        }
-        catch (FileNotFoundException e){
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error reading file");
-        }
-        return null;
+
+        String rootPath = System.getProperty("user.dir");;
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(rootPath + "\\..\\ITADkey.txt"));
+        key = bufferedReader.readLine();
+        return key;
     }
 
     static HashMap<String, Shop> shopsHash = new HashMap<>();
@@ -86,10 +80,19 @@ public class APIImplementation implements APIInterface {
 
     public ArrayList<Game> SearchByTitle(String title, int maxResults) throws APIException //maxResults 0-100
     {
+        if (title.isEmpty()){
+            return new ArrayList<Game>();
+        }
         try (HttpClient client = HttpClient.newHttpClient()) {
             maxResults = Math.clamp(maxResults, 1, 100);
             title = title.replace(" ", "_");
-            String url = "https://api.isthereanydeal.com/games/search/v1?key=" + getKey() + "&title=" + title + "&results=" + maxResults;
+            String url = "";
+            try{
+                url = "https://api.isthereanydeal.com/games/search/v1?key=" + getKey() + "&title=" + title + "&results=" + maxResults;
+            }catch (Exception e){
+                throw new APIException("Couldn't get key");
+            }
+
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(timeUntilTimeout)).build();
             HttpResponse<String> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .join();
@@ -145,7 +148,12 @@ public class APIImplementation implements APIInterface {
     }
 
     public Game GetGameInfoByIsThereAnyDealID(String isthereanydealGameID) throws APIException {
-        String url = "https://api.isthereanydeal.com/games/info/v2?key=" + getKey() + "&id=" + isthereanydealGameID;
+        String url = null;
+        try {
+            url = "https://api.isthereanydeal.com/games/info/v2?key=" + getKey() + "&id=" + isthereanydealGameID;
+        } catch (IOException e) {
+            throw new APIException("Couldn't get key");
+        }
         HttpResponse<String> response = GETRequest(url);
         if (response == null || response.statusCode() != 200) {
             if (response != null) System.out.println(response.statusCode());
@@ -311,7 +319,12 @@ public class APIImplementation implements APIInterface {
     }
 
     public Game GetGameInfoBySteamID(String steamID) throws APIException {
-        HttpResponse<String> response = GETRequest("https://api.isthereanydeal.com/games/lookup/v1?key=" + getKey() + "&appid=" + steamID);
+        HttpResponse<String> response = null;
+        try {
+            response = GETRequest("https://api.isthereanydeal.com/games/lookup/v1?key=" + getKey() + "&appid=" + steamID);
+        } catch (IOException e) {
+            throw new APIException("Couldn't get key");
+        }
         if (response == null || response.statusCode() != 200) {
             throw new APIException("Error in API response");
         }
@@ -603,7 +616,12 @@ public class APIImplementation implements APIInterface {
     public ArrayList<Game> GetGamesWithDeals(String country, int offset, int limit, String sort, boolean nondeals, boolean mature, ArrayList<Integer> shopIDs, String filter) throws APIException{
         offset = Math.max(0, offset);
         limit = Math.clamp(limit, 1, 200);
-        String url = "https://api.isthereanydeal.com/deals/v2?country=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature + "&key=" + getKey();
+        String url = null;
+        try {
+            url = "https://api.isthereanydeal.com/deals/v2?country=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature + "&key=" + getKey();
+        } catch (IOException e) {
+            throw new APIException("Couldn't get key");
+        }
         System.out.println(url);
         StringBuilder shops = new StringBuilder();
         int i = 0;

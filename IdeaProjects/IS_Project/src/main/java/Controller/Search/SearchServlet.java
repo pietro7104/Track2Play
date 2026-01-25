@@ -31,6 +31,11 @@ public class SearchServlet extends HttpServlet {
         else countryCode = user.getCountryISO();
 
         String query = request.getParameter("query");
+        if (query == null || query.isEmpty()) {
+            Utility.addError(request, "Nessun termine di ricerca");
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
+        }
         APIInterface api = Utility.getAPI();
         ArrayList<Game> games;
         try {

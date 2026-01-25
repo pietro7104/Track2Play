@@ -119,6 +119,7 @@ script{
 }
 
 .search-button{
+
 }
 
 .popup-block{
@@ -145,7 +146,6 @@ script{
 }
 
 .popup{
-
     z-index: 10;
     background-color: white;
     border: solid lightcoral 2px;
@@ -222,7 +222,7 @@ script{
 }
 
 .top-games .game-display{
-    width: 300px;
+    width: 350px;
 }
 
 .game-display img{
@@ -417,13 +417,17 @@ script{
 }
 
 .review-score{
-    background-color: green;
+    color: black;
+    background-color: #00ce7a;
     border-radius: 5px;
     padding: 5px;
+    font-family: ProximaNova,sans-serif;;
     font-size: 23px;
     align-content: center;
     aspect-ratio: 1;
 }
+
+
 
 .review-source{
 
@@ -432,4 +436,29 @@ script{
 .review-count{
     color: #b3b3b3;
     font-size: 12px;
+}
+
+@media only screen and (max-width: 1110px){
+    .top-games{
+        flex-direction: column;
+        align-content: center;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .game-page{
+        flex-direction: column;
+    }
+
+    .game-image{
+        width: 90%;
+    }
+
+    .deal-display{
+        width: 90%;
+    }
+
+    .review-display{
+        width: 90%;
+    }
 }
