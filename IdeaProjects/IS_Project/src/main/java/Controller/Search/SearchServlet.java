@@ -35,6 +35,7 @@ public class SearchServlet extends HttpServlet {
             Utility.addError(request, "Nessun termine di ricerca");
             OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
             openHomePageServlet.doGet(request, response);
+            return;
         }
         APIInterface api = Utility.getAPI();
         ArrayList<Game> games;
