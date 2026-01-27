@@ -1,5 +1,4 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.util.Calendar" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:useBean id="ourDate" class="java.util.Date"/>
@@ -17,6 +16,53 @@
 
 
     <h1>La tua collezione</h1>
+    <c:choose>
+
+        <c:when test="${requestScope.collection == null or requestScope.collection.size() le 0}">
+            <div>Nessun gioco nella collezione</div>
+        </c:when>
+
+        <c:otherwise>
+            <div class="collection">
+
+                <c:forEach items="${requestScope.collection}" var="item">
+
+                    <jsp:include page="includables/Game Display.jsp">
+                        <jsp:param name="gameID" value="${item.gameId}"/>
+                        <jsp:param name="image" value="${item.cover}"/>
+                        <jsp:param name="game_name" value="${item.gameTitle}"/>
+                        <jsp:param name="addedDate"
+                                   value="${Utility.dateToStringJSP(item.dateAdded)}"/>
+                        <jsp:param name="completed" value="${item.completed}"/>
+                    </jsp:include>
+
+                    <!-- Pulsante di rimozione -->
+                    <form action="Collection/Remove" method="post" style="text-align:center;">
+                        <input type="hidden" name="gameItemId" value="${item.gameId}">
+                        <button type="submit">Rimuovi dalla collezione</button>
+                    </form>
+                    <!-- Stato di completamento gioco -->
+                    <form action="Collection/UpdateCompletion" method="post">
+
+                        <input type="hidden" name="gameId" value="${item.gameId}" />
+
+                        <label>
+                            <input type="checkbox"
+                                   name="completed"
+                                   value="true"
+                                   onchange="this.form.submit()"
+                                   <c:if test="${item.completed}">checked</c:if> />
+                            Completato
+                        </label>
+
+                    </form>
+
+                </c:forEach>
+
+            </div>
+        </c:otherwise>
+
+    </c:choose>
     <div class="collection">
         <jsp:include page="includables/Game Display.jsp">
             <jsp:param name="image" value="images/silksong_header.jpg"/>

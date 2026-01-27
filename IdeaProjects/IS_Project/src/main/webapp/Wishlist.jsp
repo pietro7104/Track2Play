@@ -29,10 +29,10 @@
 
 
                 <jsp:include page="includables/Game Display.jsp">
-                    <jsp:param name="gameID" value="${item.getgameId()}"/>
-                    <jsp:param name="image" value="${item.getGameImageURL()}"/>
-                    <jsp:param name="game_name" value="${item.getGameTitle()}"/>
-                    <jsp:param name="addedDate" value="${item.getAddedDate()}"/>
+                    <jsp:param name="gameID" value="${item.gameId}"/>
+                    <jsp:param name="image" value="${item.gameImageURL}"/>
+                    <jsp:param name="game_name" value="${item.gameTitle}"/>
+                    <jsp:param name="addedDate" value="${item.addedDate}"/>
                 </jsp:include>
 
                 <!-- Bottone rimozione -->
