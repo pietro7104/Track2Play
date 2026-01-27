@@ -1,4 +1,4 @@
-package Model.Service;
+package Service;
 
 import Model.WishlistItem;
 import Model.WishlistItemDAO;

@@ -1,9 +1,8 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
-import Model.Service.WishlistService;
+import Service.WishlistService;
 import Model.User;
-import Model.WishlistItemDAO;
 import Model.WishlistItem;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

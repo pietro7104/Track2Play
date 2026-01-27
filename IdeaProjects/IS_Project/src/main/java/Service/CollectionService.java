@@ -1,4 +1,4 @@
-package Model.Service;
+package Service;
 import Model.CollectionItem;
 import Model.CollectionItemDAO;
 
