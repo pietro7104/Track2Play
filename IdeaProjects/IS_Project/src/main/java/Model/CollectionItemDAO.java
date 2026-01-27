@@ -51,6 +51,7 @@ public class CollectionItemDAO {
     }
 
     // Rimuovi gioco dalla collezione
+    // Il delete dalla tabella "Aggiunto" dovrebbe aggiornare gli attributi derivabili nella tabella "Collezione"
     public void removeGameFromCollection(int userId, String gameId) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(

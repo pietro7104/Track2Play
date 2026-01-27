@@ -1,6 +1,7 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
+import Model.Service.WishlistService;
 import Model.User;
 import Model.WishlistItem;
 import Model.WishlistItemDAO;
@@ -35,10 +36,10 @@ public class AddWishlistItemServlet extends HttpServlet {
             return;
         }
 
-        WishlistItemDAO wishlistItemDAO = new WishlistItemDAO();
+        WishlistService service = new WishlistService();
 
         try {
-            wishlistItemDAO.addItemToWishlist(loggedUser.getID(), gameId, new Date());
+            service.addGameToWishlist(loggedUser.getID(), gameId, new Date());
             response.sendRedirect("Wishlist/View");  // Reindirizza alla pagina di visualizzazione della wishlist
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiungere l'articolo alla wishlist");

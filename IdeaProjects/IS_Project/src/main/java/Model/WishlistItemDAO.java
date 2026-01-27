@@ -82,7 +82,6 @@ public class WishlistItemDAO {
         return items;
     }
 
-
     public void removeItemFromWishlistByGameId(int userId, String gameId) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
