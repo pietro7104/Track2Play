@@ -1,8 +1,7 @@
 package Controller.AccountManagement;
 
 import Controller.Utility;
-import Model.User;
-import Model.UserDAO;
+import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,9 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.sql.SQLException;
-import java.util.Random;
 
 @WebServlet("/Register")
 public class RegisterServlet extends HttpServlet {
@@ -24,34 +21,20 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String codiceISO = request.getParameter("codiceISO");
 
-        UserDAO userDAO = new UserDAO();
-        User u = null;
+
+        UserAccountService service = new UserAccountService();
 
         try{
-            u = userDAO.getUserByUsername(username);
-        }
-        catch (SQLException e){
-            Utility.addError(request, "Errore nella registrazione");
+            service.registerUser(username, password, codiceISO);
+        } catch (Exception e){
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nella registrazione");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
             rd.forward(request, response);
-            return;
-        }
-
-        if (u != null){
-            System.out.println("this username is already taken");
-            //HANDLE EXCEPTION
-            return;
-        }
-
-        String hashedPassword = Utility.toHash(password);
-
-        try {
-            userDAO.addUser(username, hashedPassword, codiceISO);
-        }
-        catch (SQLException e){
-            System.out.println("SQLException: " + e.getMessage());
-            e.printStackTrace();
-            //HANDLE EXCEPTION
             return;
         }
 

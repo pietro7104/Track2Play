@@ -4,6 +4,7 @@ import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
+import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,45 +24,32 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UserDAO userDAO = new UserDAO();
-        User u;
+        UserAccountService service = new UserAccountService();
+        User foundUser;
+
         try {
-            u = userDAO.getUserByUsername(username);
-        }
-        catch (SQLException e){
-            // System.out.print(e);
-            Utility.addError(request, "Errore nel login");
+            foundUser = service.checkCredentialsAndGetUser(username, password);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nel login");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             return;
         }
 
-        if (u == null){
-            // Entriamo se non è stato trovato un account con l'username inserito nel form di login
-            Utility.addError(request, "Non e' stato trovato un account con l'username inserito");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
-            System.out.println("User not found");
-            return;
-        }
+        HttpSession session = request.getSession();
+        session.setAttribute("user", foundUser);
+        //session.setMaxInactiveInterval(60); //??
 
-        if (Utility.toHash(password).equals(u.getPassword())){
-            // Entriamo se la password del database e quella inserita nel form di login coincidono
-            HttpSession session = request.getSession();
-            session.setAttribute("user", u);
-            //session.setMaxInactiveInterval(60); //??
-
-            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
-            openHomePageServlet.doGet(request, response);
-            return;
-            /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+        OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+        openHomePageServlet.doGet(request, response);
+        return;
+        /*RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
             rd.forward(request, response);*/
-        }
-        else {
-            Utility.addError(request, "Password incorretta");
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
-        }
-
     }
 }
