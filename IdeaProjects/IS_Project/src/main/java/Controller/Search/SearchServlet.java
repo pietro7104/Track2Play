@@ -69,7 +69,6 @@ public class SearchServlet extends HttpServlet {
         }
         ArrayList<Integer> shopIDs = new ArrayList<>();
         for (Shop shop : shops) {
-            System.out.println(shop.name);
             shopIDs.add(shop.id);
         }
 

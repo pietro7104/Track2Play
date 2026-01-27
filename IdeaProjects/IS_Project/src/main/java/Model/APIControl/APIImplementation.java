@@ -622,7 +622,6 @@ public class APIImplementation implements APIInterface {
         } catch (IOException e) {
             throw new APIException("Couldn't get key");
         }
-        System.out.println(url);
         StringBuilder shops = new StringBuilder();
         int i = 0;
         for (Integer shopID : shopIDs) {
