@@ -49,7 +49,6 @@ public class UserDAO {
     }
 
     // La delete dell'utente dovrebbe anche cancellare i suoi pagamenti, la sua collezione e i suoi completamenti
-    /*
     public void deleteUserByID(int id) throws SQLException
     {
         Connection con = Database.getConnection();
@@ -57,5 +56,4 @@ public class UserDAO {
         ps.setInt(1, id);
         ps.executeUpdate();
     }
-     */
 }

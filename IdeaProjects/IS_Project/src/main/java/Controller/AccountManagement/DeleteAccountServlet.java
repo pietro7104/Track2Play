@@ -3,6 +3,7 @@ package Controller.AccountManagement;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
+import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,23 +21,25 @@ public class DeleteAccountServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        UserDAO userDAO = new UserDAO();
+        User toDelete = (User) session.getAttribute("user");
 
-        User toDelete;
+        UserAccountService service = new UserAccountService();
+
         try{
-            toDelete = userDAO.getUserByUsername(username);
-            // userDAO.deleteUserByID(toDelete.getID());
-        }
-        catch (SQLException e){
-            Utility.addError(request, "Errore nella cancellazione dell'account");
+            service.deleteUserById(toDelete.getID());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nella cancellazione account.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
             rd.forward(request, response);
-            return;
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            rd.forward(request, response);
         }
-
-        RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-        rd.forward(request, response);
-        return;
     }
 }

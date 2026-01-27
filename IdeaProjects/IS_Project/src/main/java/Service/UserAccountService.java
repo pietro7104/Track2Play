@@ -1,11 +1,8 @@
 package Service;
 
-import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpSession;
 
 import java.sql.SQLException;
 
@@ -17,16 +14,16 @@ public class UserAccountService {
         this.dao = new UserDAO();
     }
 
-    public void registerUser(String username, String password, String codiceISO) throws IllegalAccessException, SQLException {
+    public void registerUser(String username, String password, String codiceISO) throws IllegalArgumentException, SQLException {
         // Controlli sull'username, password, codiceISO
         if(!checkUserUsername(username))
-            throw new IllegalAccessException("Username non valido.");
+            throw new IllegalArgumentException("Username non valido.");
 
         if(!checkUserPassword(password))
-            throw new IllegalAccessException("Password non valida.");
+            throw new IllegalArgumentException("Password non valida.");
 
-        if(!checkCodiceISO(codiceISO))
-            throw new IllegalAccessException("Codice ISO non valido.");
+        if(!checkUserCodiceISO(codiceISO))
+            throw new IllegalArgumentException("Codice ISO non valido.");
 
 
         // Controllo se è già presente un utente con l'username inserito
@@ -41,13 +38,13 @@ public class UserAccountService {
         dao.addUser(username, hashedPassword, codiceISO);
     }
 
-    public User checkCredentialsAndGetUser(String username, String password) throws SQLException, IllegalAccessException {
+    public User checkCredentialsAndGetUser(String username, String password) throws SQLException, IllegalArgumentException {
         // Controlli sull'username, password
         if(!checkUserUsername(username))
-            throw new IllegalAccessException("Username non valido.");
+            throw new IllegalArgumentException("Username non valido.");
 
         if(!checkUserPassword(password))
-            throw new IllegalAccessException("Password non valida.");
+            throw new IllegalArgumentException("Password non valida.");
 
         User foundUser;
 
@@ -66,6 +63,19 @@ public class UserAccountService {
         }
     }
 
+    public void deleteUserById(int id) throws SQLException, IllegalArgumentException {
+        if(!checkUserId(id))
+            throw new IllegalArgumentException("Id non valido.");
+
+        dao.deleteUserByID(id);
+    }
+
+    protected boolean checkUserId(int id) {
+        if(id <= 0)
+            return false;
+        return true;
+    }
+
     protected boolean checkUserUsername(String username) {
         if(username.length() > 30 || username.isBlank() || username.isEmpty())
             return false;
@@ -78,7 +88,7 @@ public class UserAccountService {
         return true;
     }
 
-    protected boolean checkCodiceISO(String codiceISO) {
+    protected boolean checkUserCodiceISO(String codiceISO) {
         if(codiceISO.length() > 2 || codiceISO.isBlank() || codiceISO.isEmpty())
             return false;
         return true;
