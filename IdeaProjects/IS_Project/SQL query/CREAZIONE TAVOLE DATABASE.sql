@@ -129,3 +129,24 @@ BEGIN
     END IF;
 END;
 //
+
+# TRIGGER 5 #
+# Trigger per l aggiornamento del numero di giochi in una collezione in seguito alla rimozione di un gioco dalla collezione (delete su aggiunto)
+DELIMITER //
+
+create trigger delete_aggiunto
+    after delete on aggiunto
+    for each row
+BEGIN
+    UPDATE Collezione SET Num_Tot = Num_Tot - 1 WHERE IdUtente = OLD.IdUtente;
+    IF (SELECT Stato From Completamento C WHERE C.IdUtente = OLD.IdUtente AND C.IdGioco = OLD.IdGioco) = false THEN
+        UPDATE Collezione SET Num_NonCompletati = Num_NonCompletati - 1 WHERE IdUtente = OLD.IdUtente;
+    END IF;
+
+    IF (SELECT Stato From Completamento C WHERE C.IdUtente = OLD.IdUtente AND C.IdGioco = OLD.IdGioco) = true THEN
+        UPDATE Collezione SET Num_Completati = Num_Completati - 1 WHERE IdUtente = OLD.IdUtente;
+    END IF;
+
+    DELETE FROM Completamento WHERE IdUtente = OLD.IdUtente AND IdGioco = OLD.IdGioco;
+END;
+//
