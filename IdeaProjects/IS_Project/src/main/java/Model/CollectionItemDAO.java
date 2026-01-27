@@ -38,6 +38,7 @@ public class CollectionItemDAO {
     }
 
     // Aggiungi gioco alla collezione
+    // ! ATTENZIONE per aggiungere un gioco alla collezione bisogna per forza segnalarne anche l'acquisto !
     public void addGameToCollection(int userId, String gameId) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
