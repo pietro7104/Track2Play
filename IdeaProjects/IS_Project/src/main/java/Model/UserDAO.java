@@ -48,6 +48,22 @@ public class UserDAO {
         else return null;
     }
 
+    public void modifyUserPasswordById(int userId, String newPassword) throws SQLException {
+        Connection con = Database.getConnection();
+        PreparedStatement ps = con.prepareStatement("UPDATE utente SET Password = ? WHERE IdUtente = ?");
+        ps.setString(1, newPassword);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+    }
+
+    public void modifyISOCodeById(int userId, String isoCode) throws SQLException {
+        Connection con = Database.getConnection();
+        PreparedStatement ps = con.prepareStatement("UPDATE utente SET Codice_ISO = ? WHERE IdUtente = ?");
+        ps.setString(1, isoCode);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+    }
+
     // La delete dell'utente dovrebbe anche cancellare i suoi pagamenti, la sua collezione e i suoi completamenti
     public void deleteUserByID(int id) throws SQLException
     {

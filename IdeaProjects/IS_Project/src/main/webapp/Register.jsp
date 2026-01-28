@@ -17,6 +17,8 @@
     <title>Registrazione</title>
 </head>
 <body style="background-color: #070c21; display: flex; flex-direction:column; align-items: center; justify-content: center">
+<jsp:include page="includables/NavBar.jsp"/>
+
 <fieldset class="login_fieldset">
     <div class="title">Registrati</div>
 

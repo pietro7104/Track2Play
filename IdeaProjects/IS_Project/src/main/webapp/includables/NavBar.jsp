@@ -29,21 +29,13 @@
     <div style="display: flex; flex-direction: row">
         <c:choose>
             <c:when test="${sessionScope.user != null}">
+                <a href="Settings Page.jsp">
+                    <button class="navbar_button">Impostazioni Account</button>
+                </a>
+
                 <a href="Collection Page.jsp">
                     <button class="navbar_button">Collezione</button>
                 </a>
-
-                <a href="WishlistView">
-                    <button class="navbar_button">Wishlist</button>
-                </a>
-
-                <form action="Logout" method="post">
-                    <input class="navbar_button" type="submit" value="Logout">
-                </form>
-
-                <form action="DeleteAccount" method="post">
-                    <input class="navbar_button" type="submit" value="Cancella account">
-                </form>
             </c:when>
 
             <c:otherwise>

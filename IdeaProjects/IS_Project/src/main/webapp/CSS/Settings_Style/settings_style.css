@@ -1,0 +1,65 @@
+.center_div {
+    width: 500px;
+    height: fit-content;
+    background-color: whitesmoke;
+    margin: 5% auto auto;
+    color: black;
+    border-radius: 15px;
+}
+
+.form_div {
+    padding: 3%;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.input {
+    line-height: 40px;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    border-radius: 15px 15px 0px 0px;
+    margin-bottom: 5%;
+}
+
+.input label{
+    font-size: 25px;
+    color: slategray;
+}
+
+.input input {
+    height: 25px;
+    width: 100%;
+    font-size: 20px;
+}
+
+.input input[type=text]:disabled {
+    background-color: white;
+    border: 1px solid;
+    color: black;
+}
+
+.input select {
+    width: 25%;
+    font-size: 20px;
+}
+
+.buttons_div {
+    width: 100%;
+    padding: 3%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+button {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.input button {
+    margin-top: 15px;
+}
+
+.input p {
+    font-size: 20px;
+}
