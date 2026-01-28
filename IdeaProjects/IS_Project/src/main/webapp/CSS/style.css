@@ -387,6 +387,54 @@ script{
     margin: 10px 0;
 }
 
+.add-to-wishlist-button{
+    background-color: #00ce7a;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.add-to-wishlist-button:hover{
+    cursor: pointer;
+    background-color: #4fcc9a;
+}
+
+.add-to-collection-button{
+    background-color: dodgerblue;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.add-to-collection-button:hover{
+    cursor: pointer;
+    background-color: #64aff8;
+}
+
+.remove-from-wishlist-button{
+    background-color: #ff6874;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.remove-from-wishlist-button:hover{
+    cursor: pointer;
+    background-color: #fa8c95;
+}
+
+.remove-from-collection-button{
+    background-color: #ed822b;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.remove-from-collection-button:hover{
+    cursor: pointer;
+    background-color: #ea8c3f;
+}
+
 .tag{
     background-color: #373d62;
     color: white;

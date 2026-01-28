@@ -27,12 +27,16 @@
 
             <c:forEach items="${requestScope.wishlistItems}" var="item">
 
-
+                <c:set var="bestDeal" value="${requestScope.prices.get(item.gameId).GetBestDeal()}"/>
                 <jsp:include page="includables/Game Display.jsp">
                     <jsp:param name="gameID" value="${item.gameId}"/>
                     <jsp:param name="image" value="${item.gameImageURL}"/>
                     <jsp:param name="game_name" value="${item.gameTitle}"/>
                     <jsp:param name="addedDate" value="${item.addedDate}"/>
+                    <jsp:param name="price" value="${bestDeal.dealPrice.amount}"/>
+                    <jsp:param name="cut" value="${bestDeal.cut}"/>
+                    <jsp:param name="regularPrice" value="${bestDeal.regularPrice.amount}"/>
+                    <jsp:param name="currency" value="${bestDeal.dealPrice.currency}"/>
                 </jsp:include>
 
                 <!-- Bottone rimozione -->

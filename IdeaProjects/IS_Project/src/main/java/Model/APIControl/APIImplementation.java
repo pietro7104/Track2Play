@@ -619,7 +619,6 @@ public class APIImplementation implements APIInterface {
         String url = null;
         try {
             url = "https://api.isthereanydeal.com/deals/v2?country=" + country + "&offset=" + offset + "&limit=" + limit + "&sort=" + sort + "&filter=" + filter + "&nondeals=" + nondeals + "&mature=" + mature + "&key=" + getKey();
-            System.out.println(url);
         } catch (IOException e) {
             throw new APIException("Couldn't get key");
         }
