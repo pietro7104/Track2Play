@@ -25,7 +25,7 @@ public class ViewCollectionServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        User loggedUser = (User) session.getAttribute("username");
+        User loggedUser = (User) session.getAttribute("user");
 
         if (loggedUser == null) {
             Utility.addError(request, "Devi effettuare il login per visualizzare la collezione");
@@ -45,8 +45,14 @@ public class ViewCollectionServlet extends HttpServlet {
                     request.getRequestDispatcher("Collection Page.jsp");
             rd.forward(request, response);
 
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nel caricamento della collezione");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nel caricamento della collezione.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
         }

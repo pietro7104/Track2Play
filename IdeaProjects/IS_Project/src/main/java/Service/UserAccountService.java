@@ -12,6 +12,13 @@ public class UserAccountService {
 
     public UserAccountService() { }
 
+    public User getUserByID(int id) throws SQLException, IllegalArgumentException {
+        if(!checkUserId(id))
+            throw new IllegalArgumentException("Id non valido.");
+
+        return USER_DAO.getUserByID(id);
+    }
+
     public void registerUser(String username, String password, String codiceISO) throws IllegalArgumentException, SQLException {
         // Controlli sull'username, password, codiceISO
         if(!checkUserUsername(username))
@@ -59,6 +66,30 @@ public class UserAccountService {
         } else {
             throw new RuntimeException("Password incorretta.");
         }
+    }
+
+    public void modifyUserPasswordById(int id, String newPassword) throws SQLException, IllegalArgumentException {
+        if(!checkUserId(id))
+            throw new IllegalArgumentException("Id non valido.");
+
+        if(!checkUserPassword(newPassword))
+            throw new IllegalArgumentException("Password non valida.");
+
+        // Hashing della password
+        String hashedPassword = Utility.toHash(newPassword);
+
+        // Salvataggio dell'utente nel database
+        USER_DAO.modifyUserPasswordById(id, hashedPassword);
+    }
+
+    public void modifyISOCodeById(int id, String isoCode) throws SQLException, IllegalArgumentException {
+        if(!checkUserId(id))
+            throw new IllegalArgumentException("Id non valido.");
+
+        if(!checkUserCodiceISO(isoCode))
+            throw new IllegalArgumentException("Codice ISO non valido.");
+
+        USER_DAO.modifyISOCodeById(id, isoCode);
     }
 
     public void deleteUserById(int id) throws SQLException, IllegalArgumentException {
