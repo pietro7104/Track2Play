@@ -1,6 +1,7 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
+import Model.UserManagement;
 import Service.WishlistService;
 import Model.User;
 import jakarta.servlet.RequestDispatcher;
@@ -34,10 +35,10 @@ public class AddWishlistItemServlet extends HttpServlet {
             return;
         }
 
-        WishlistService service = new WishlistService();
+        UserManagement userManagement = new UserManagement();
 
         try {
-            service.addGameToWishlist(loggedUser.getID(), gameId, new Date());
+            userManagement.addGameToWishlist(loggedUser.getID(), gameId, new Date());
             response.sendRedirect("Wishlist/View");  // Reindirizza alla pagina di visualizzazione della wishlist
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiungere l'articolo alla wishlist");

@@ -1,6 +1,7 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
+import Model.UserManagement;
 import Service.WishlistService;
 import Model.User;
 import Model.WishlistItem;
@@ -32,10 +33,10 @@ public class ViewWishlistServlet extends HttpServlet {
             return;
         }
 
-        WishlistService service = new WishlistService();
+        UserManagement userManagement = new UserManagement();
 
         try {
-            List<WishlistItem> wishlistItems = service.getWishlistedGamesByUserId(loggedUser.getID());
+            List<WishlistItem> wishlistItems = userManagement.getWishlistedGamesByUserId(loggedUser.getID());
             // List<WishlistItem> wishlistItems = wishlistItemDAO.getWishlistItemsByUsername(loggedUser.getUsername());
             request.setAttribute("wishlistItems", wishlistItems);
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");

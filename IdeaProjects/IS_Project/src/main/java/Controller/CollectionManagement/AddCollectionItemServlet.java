@@ -2,6 +2,7 @@ package Controller.CollectionManagement;
 import Controller.Utility;
 import Model.User;
 
+import Model.UserManagement;
 import Service.CollectionService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -33,10 +34,10 @@ public class AddCollectionItemServlet extends HttpServlet {
             return;
         }
 
-        CollectionService service = new CollectionService();
+        UserManagement userManagement = new UserManagement();
 
         try {
-            service.addGame(loggedUser.getID(), gameId);
+            userManagement.addGame(loggedUser.getID(), gameId);
             response.sendRedirect("Collection/View");
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiungere il gioco alla collezione");

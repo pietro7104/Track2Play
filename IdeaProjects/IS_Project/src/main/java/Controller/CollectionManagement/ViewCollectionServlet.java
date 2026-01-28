@@ -3,6 +3,7 @@ package Controller.CollectionManagement;
 import Controller.Utility;
 import Model.CollectionItem;
 import Model.User;
+import Model.UserManagement;
 import Service.CollectionService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -33,11 +34,11 @@ public class ViewCollectionServlet extends HttpServlet {
             return;
         }
 
-        CollectionService service = new CollectionService();
+        UserManagement userManagement = new UserManagement();
 
         try {
             List<CollectionItem> collection =
-                    service.getUserCollection(loggedUser.getID());
+                    userManagement.getUserCollection(loggedUser.getID());
 
             request.setAttribute("collection", collection);
             RequestDispatcher rd =

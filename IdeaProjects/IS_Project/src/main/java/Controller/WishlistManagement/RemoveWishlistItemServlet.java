@@ -1,6 +1,7 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
+import Model.UserManagement;
 import Service.WishlistService;
 import Model.User;
 import jakarta.servlet.RequestDispatcher;
@@ -30,10 +31,10 @@ public class RemoveWishlistItemServlet extends HttpServlet {
             return;
         }
 
-        WishlistService service = new WishlistService();
+        UserManagement userManagement = new UserManagement();
 
         try {
-            service.removeFromWishlistById(loggedUser.getID(), gameId);
+            userManagement.removeFromWishlistById(loggedUser.getID(), gameId);
             response.sendRedirect("Wishlist/View");
         } catch (SQLException e) {
             Utility.addError(request, "Errore nella rimozione dell'articolo dalla wishlist");
