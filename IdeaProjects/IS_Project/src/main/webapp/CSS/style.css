@@ -388,6 +388,7 @@ script{
 }
 
 .add-to-wishlist-button{
+    border: none;
     background-color: #00ce7a;
     color: white;
     padding: 3px;
@@ -400,6 +401,7 @@ script{
 }
 
 .add-to-collection-button{
+    border: none;
     background-color: dodgerblue;
     color: white;
     padding: 3px;
@@ -412,6 +414,7 @@ script{
 }
 
 .remove-from-wishlist-button{
+    border: none;
     background-color: #ff6874;
     color: white;
     padding: 3px;
@@ -424,6 +427,7 @@ script{
 }
 
 .remove-from-collection-button{
+    border: none;
     background-color: #ed822b;
     color: white;
     padding: 3px;

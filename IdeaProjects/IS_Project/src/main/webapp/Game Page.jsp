@@ -55,7 +55,7 @@
     </div>
 
     <c:if test="${sessionScope.user != null}">
-      <div class="buttons" style="display: flex; flex-direction: row; margin-top: 10px; margin-bottom: 10px; justify-content: space-around">
+      <div class="buttons" style="display: flex; flex-direction: row; margin-top: 10px; margin-bottom: 10px; gap: 5px">
         <c:catch var="wishlistError">
           <c:forEach var="item" items="${userManagement.getWishlistedGamesByUserId(sessionScope.user.ID)}">
             <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
