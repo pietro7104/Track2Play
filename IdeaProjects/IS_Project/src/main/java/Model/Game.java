@@ -267,6 +267,13 @@ public class Game {
         this.assets = assets;
     }
 
+    public Game(String isThereAnyDealID, String title, String banner){
+        this.isThereAnyDealID = isThereAnyDealID;
+        this.title = title;
+        HashMap<String, String> assets = new HashMap<>();
+        assets.put("banner", banner);
+        this.assets = assets;
+    }
 
     public String GetHighestResolutionBanner(){
 
