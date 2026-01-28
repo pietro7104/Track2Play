@@ -40,8 +40,14 @@ public class AddWishlistItemServlet extends HttpServlet {
         try {
             userManagement.addGameToWishlist(loggedUser.getID(), gameId, new Date());
             response.sendRedirect("Wishlist/View");  // Reindirizza alla pagina di visualizzazione della wishlist
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nell'aggiungere l'articolo alla wishlist");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nell'aggiungere l'articolo alla wishlist.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
         }

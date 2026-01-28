@@ -40,8 +40,14 @@ public class UpdateCompletionServlet extends HttpServlet {
         try {
             userManagement.setCompleted(loggedUser.getID(), gameId, completed);
             response.sendRedirect("Collection/View");
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nell'aggiornare lo stato del gioco");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nell'aggiornare lo stato del gioco.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
             rd.forward(request, response);
         }
