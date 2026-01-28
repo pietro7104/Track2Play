@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 
-@WebServlet("/Wishlist/Add")
+@WebServlet("/WishlistAdd")
 public class AddWishlistItemServlet extends HttpServlet {
 
     @Override
@@ -26,7 +26,7 @@ public class AddWishlistItemServlet extends HttpServlet {
         String gameId = request.getParameter("gameId");
 
         HttpSession session = request.getSession();
-        User loggedUser = (User) session.getAttribute("username");
+        User loggedUser = (User) session.getAttribute("user");
 
         if (loggedUser == null) {
             Utility.addError(request, "Devi effettuare il login per aggiungere articoli alla wishlist");
@@ -39,7 +39,7 @@ public class AddWishlistItemServlet extends HttpServlet {
 
         try {
             userManagement.addGameToWishlist(loggedUser.getID(), gameId, new Date());
-            response.sendRedirect("Wishlist/View");  // Reindirizza alla pagina di visualizzazione della wishlist
+            response.sendRedirect("WishlistView");  // Reindirizza alla pagina di visualizzazione della wishlist
         } catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){

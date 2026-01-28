@@ -55,10 +55,9 @@
     </div>
 
     <c:if test="${sessionScope.user != null}">
-      <div class="buttons" style="display: flex; flex-direction: row">
+      <div class="buttons" style="display: flex; flex-direction: row; margin-top: 10px; margin-bottom: 10px; justify-content: space-around">
         <c:catch var="wishlistError">
-          <c:set var="wishlist" value="${userManagement.getWishlistedGamesByUserId(sessionScope.user.ID)}"/>
-          <c:forEach var="item" items="wishlist">
+          <c:forEach var="item" items="${userManagement.getWishlistedGamesByUserId(sessionScope.user.ID)}">
             <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInWishlist" value="true"/>
             </c:if>
@@ -66,8 +65,7 @@
         </c:catch>
 
         <c:catch var="collectionError">
-          <c:set var="collection" value="${userManagement.getUserCollection(sessionScope.user.ID)}"/>
-          <c:forEach var="item" items="collection">
+          <c:forEach var="item" items="${userManagement.getUserCollection(sessionScope.user.ID)}">
             <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInCollection" value="true"/>
             </c:if>
@@ -81,7 +79,7 @@
           </c:when>
 
           <c:when test="${gameInWishlist == null}">
-            <form action="Wishlist/Add" method="post">
+            <form action="WishlistAdd" method="post">
               <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <button class="add-to-wishlist-button" type="submit">
                 Aggiungi alla wishlist
@@ -120,6 +118,7 @@
           </c:when>
         </c:choose>
       </div>
+    </c:if>
       <c:choose>
         <c:when test="${requestScope.info.reviews != null and requestScope.info.reviews.size() gt 0}">
           <span style="font-size: 30px; font-weight: bold; margin-top: 20px">Reviews:</span>
@@ -128,7 +127,6 @@
           <span style="font-size: 30px; font-weight: bold; margin-top: 20px">Nessuna recensione</span>
         </c:otherwise>
       </c:choose>
-    </c:if>
 
 
     <div class="review-display">

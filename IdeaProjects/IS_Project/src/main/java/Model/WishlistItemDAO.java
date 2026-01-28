@@ -18,7 +18,7 @@ public class WishlistItemDAO {
         );
         ps.setInt(1, userId);
         ps.setString(2, gameId);
-        ps.setDate(3, (java.sql.Date) date);
+        ps.setDate(3, new java.sql.Date(date.getTime()));
         ps.executeUpdate();
         ps.close();
     }

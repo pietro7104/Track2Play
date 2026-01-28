@@ -28,14 +28,6 @@ public class OpenGamePageServlet extends HttpServlet {
         if (user == null)  countryCode = "IT";
         else countryCode = user.getCountryISO();
 
-        /*if (user == null){
-            User u = new User();
-            u.setCountryISO("IT");
-            u.setID(1);
-            u.setUsername("gatto");
-            u.setPassword("gerhe");
-            session.setAttribute("user", u);
-        }*/
 
         String id = request.getParameter("itadid");
         HashMap<String, Price> prices = null;

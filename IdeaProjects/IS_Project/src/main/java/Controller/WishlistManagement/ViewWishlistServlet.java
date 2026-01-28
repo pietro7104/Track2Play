@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@WebServlet("/Wishlist/View")
+@WebServlet("/WishlistView")
 public class ViewWishlistServlet extends HttpServlet {
 
     @Override
@@ -43,7 +43,7 @@ public class ViewWishlistServlet extends HttpServlet {
 
         try {
             List<WishlistItem> wishlistItems = userManagement.getWishlistedGamesByUserId(loggedUser.getID());
-            // List<WishlistItem> wishlistItems = wishlistItemDAO.getWishlistItemsByUsername(loggedUser.getUsername());
+
             APIInterface api = Utility.getAPI();
             ArrayList<String> ids = new ArrayList<>();
             for (WishlistItem wishlistItem : wishlistItems) {
@@ -55,6 +55,7 @@ public class ViewWishlistServlet extends HttpServlet {
             request.setAttribute("wishlistItems", wishlistItems);
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
+            return;
         }
         catch (APIException e) {
             OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
