@@ -59,7 +59,7 @@
         <c:catch var="wishlistError">
           <c:set var="wishlist" value="${userManagement.getWishlistedGamesByUserId(sessionScope.user.id)}"/>
           <c:forEach var="item" items="wishlist">
-            <c:if test="${item.gameId.equals(requestScope.info.isThereAnyDealID)}">
+            <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInWishlist" value="true"/>
             </c:if>
           </c:forEach>
@@ -68,7 +68,7 @@
         <c:catch var="colectionError">
           <c:set var="collection" value="${userManagement.getUserCollection(sessionScope.user.id)}"/>
           <c:forEach var="item" items="collection">
-            <c:if test="${item.gameId.equals(requestScope.info.isThereAnyDealID)}">
+            <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInCollection" value="true"/>
             </c:if>
           </c:forEach>
