@@ -3,16 +3,8 @@
 <link rel="stylesheet" href="../CSS/style.css">
 <jsp:useBean id="Utility" class="Controller.Utility"/>
 
-<c:choose>
-    <c:when test="${requestScope.error_list != null and requestScope.error_list.size() gt 0}">
-        <c:set var="popupClass" value="popup-block show"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="popupClass" value="popup-block"/>
-    </c:otherwise>
-</c:choose>
 
-<div class="${popupClass}" id="buy-popup">
+<div class="popup-block" id="buy-popup">
     <div class="popup" style="flex-direction: column;">
         <form id="buy-form" action="Collection/Add" method="post">
             <input type="hidden" name="gameId" value="${param.gameID}">
@@ -42,9 +34,5 @@
     {
         const popup = document.getElementById(popupID);
         popup.classList.toggle("show");
-    }
-
-    function SetError(error){
-        document.getElementById("errors").innerHTML = error;
     }
 </script>

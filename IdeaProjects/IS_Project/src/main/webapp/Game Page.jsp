@@ -22,7 +22,7 @@
 <jsp:include page="includables/Error%20Popup.jsp"/>
 <jsp:include page="includables/Buy%20Popup.jsp">
   <jsp:param name="gameID" value="${requestScope.info.isThereAnyDealID}"/>
-  <jsp:param name="userID" value="${sessionScope.user.id}"/>
+  <jsp:param name="userID" value="${sessionScope.user.ID}"/>
 </jsp:include>
 
 <body class="home-page">
@@ -77,7 +77,7 @@
 
         <c:choose>
           <c:when test="${wishlistError != null}">
-            <span class="error-message">Errore nel controllo della wishlist</span>
+            <span class="error-message">Errore nel controllo della wishlist </span>
           </c:when>
 
           <c:when test="${gameInWishlist == null}">

@@ -1,5 +1,6 @@
 package Controller.WishlistManagement;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
@@ -54,7 +55,13 @@ public class ViewWishlistServlet extends HttpServlet {
             request.setAttribute("wishlistItems", wishlistItems);
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
-        } catch (Exception e){
+        }
+        catch (APIException e) {
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request,response);
+            return;
+        }
+        catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){
                 Utility.addError(request, "Errore nel recuperare gli articoli della wishlist: " + e.getMessage());
@@ -64,8 +71,6 @@ public class ViewWishlistServlet extends HttpServlet {
 
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
-        } catch (APIException e) {
-            throw new RuntimeException(e);
         }
     }
 }
