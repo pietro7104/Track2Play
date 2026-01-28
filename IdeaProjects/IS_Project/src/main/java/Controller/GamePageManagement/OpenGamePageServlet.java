@@ -29,7 +29,6 @@ public class OpenGamePageServlet extends HttpServlet {
         else countryCode = user.getCountryISO();
 
         String id = request.getParameter("itadid");
-        System.out.println(id);
         Price price = (Price)request.getAttribute("price");
         request.setAttribute("price", price);
         APIInterface api = Utility.getAPI();

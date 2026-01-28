@@ -71,27 +71,19 @@ public class UserAccountService {
     }
 
     protected boolean checkUserId(int id) {
-        if(id <= 0)
-            return false;
-        return true;
+        return id > 0;
     }
 
     protected boolean checkUserUsername(String username) {
-        if(username.length() > 30 || username.isBlank() || username.isEmpty())
-            return false;
-        return true;
+        return username.length() <= 30 && !username.isBlank() && !username.isEmpty();
     }
 
     protected boolean checkUserPassword(String password) {
-        if(password.length() > 15 || password.isBlank() || password.isEmpty())
-            return false;
-        return true;
+        return password.length() <= 15 && !password.isBlank() && !password.isEmpty();
     }
 
     protected boolean checkUserCodiceISO(String codiceISO) {
-        if(codiceISO.length() > 2 || codiceISO.isBlank() || codiceISO.isEmpty())
-            return false;
-        return true;
+        return codiceISO.length() <= 2 && !codiceISO.isBlank() && !codiceISO.isEmpty();
     }
 
 }

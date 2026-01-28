@@ -4,6 +4,7 @@ import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
+import Model.UserManagement;
 import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,11 +25,11 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UserAccountService service = new UserAccountService();
+        UserManagement userManagement = new UserManagement();
         User foundUser;
 
         try {
-            foundUser = service.checkCredentialsAndGetUser(username, password);
+            foundUser = userManagement.checkCredentialsAndGetUser(username, password);
         }catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){

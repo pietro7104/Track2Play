@@ -2,6 +2,7 @@ package Controller.CollectionManagement;
 import Controller.Utility;
 import Model.User;
 
+import Model.UserManagement;
 import Service.CollectionService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -34,10 +35,10 @@ public class UpdateCompletionServlet extends HttpServlet {
             return;
         }
 
-        CollectionService service = new CollectionService();
+        UserManagement userManagement = new UserManagement();
 
         try {
-            service.setCompleted(loggedUser.getID(), gameId, completed);
+            userManagement.setCompleted(loggedUser.getID(), gameId, completed);
             response.sendRedirect("Collection/View");
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiornare lo stato del gioco");

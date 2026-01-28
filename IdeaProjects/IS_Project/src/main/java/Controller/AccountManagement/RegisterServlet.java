@@ -1,6 +1,7 @@
 package Controller.AccountManagement;
 
 import Controller.Utility;
+import Model.UserManagement;
 import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -22,10 +23,10 @@ public class RegisterServlet extends HttpServlet {
         String codiceISO = request.getParameter("codiceISO");
 
 
-        UserAccountService service = new UserAccountService();
+        UserManagement userManagement = new UserManagement();
 
         try{
-            service.registerUser(username, password, codiceISO);
+            userManagement.registerUser(username, password, codiceISO);
         } catch (Exception e){
             if(e.getClass() == SQLException.class){
                 Utility.addError(request, "Errore nella registrazione");

@@ -3,6 +3,7 @@ package Controller.AccountManagement;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
+import Model.UserManagement;
 import Service.UserAccountService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -23,10 +24,10 @@ public class DeleteAccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User toDelete = (User) session.getAttribute("user");
 
-        UserAccountService service = new UserAccountService();
+        UserManagement userManagement = new UserManagement();
 
         try{
-            service.deleteUserById(toDelete.getID());
+            userManagement.deleteUserById(toDelete.getID());
         } catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){
