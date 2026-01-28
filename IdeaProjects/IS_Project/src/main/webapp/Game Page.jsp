@@ -57,7 +57,7 @@
     <c:if test="${sessionScope.user != null}">
       <div class="buttons" style="display: flex; flex-direction: row">
         <c:catch var="wishlistError">
-          <c:set var="wishlist" value="${userManagement.getWishlistedGamesByUserId(sessionScope.user.id)}"/>
+          <c:set var="wishlist" value="${userManagement.getWishlistedGamesByUserId(sessionScope.user.ID)}"/>
           <c:forEach var="item" items="wishlist">
             <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInWishlist" value="true"/>
@@ -65,8 +65,8 @@
           </c:forEach>
         </c:catch>
 
-        <c:catch var="colectionError">
-          <c:set var="collection" value="${userManagement.getUserCollection(sessionScope.user.id)}"/>
+        <c:catch var="collectionError">
+          <c:set var="collection" value="${userManagement.getUserCollection(sessionScope.user.ID)}"/>
           <c:forEach var="item" items="collection">
             <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
               <c:set var="gameInCollection" value="true"/>
@@ -100,7 +100,7 @@
         </c:choose>
 
         <c:choose>
-          <c:when test="${colectionError != null}">
+          <c:when test="${collectionError != null}">
             <span class="error-message">Errore nel controllo della collezione</span>
           </c:when>
 
