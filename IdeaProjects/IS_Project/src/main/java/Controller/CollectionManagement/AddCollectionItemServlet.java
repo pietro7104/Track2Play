@@ -3,7 +3,6 @@ import Controller.Utility;
 import Model.User;
 
 import Model.UserManagement;
-import Service.CollectionService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +36,7 @@ public class AddCollectionItemServlet extends HttpServlet {
         UserManagement userManagement = new UserManagement();
 
         try {
-            userManagement.addGame(loggedUser.getID(), gameId);
+            userManagement.addGameToCollection(loggedUser.getID(), gameId);
             response.sendRedirect("Collection/View");
         } catch (SQLException e) {
             Utility.addError(request, "Errore nell'aggiungere il gioco alla collezione");

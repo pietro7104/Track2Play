@@ -18,7 +18,7 @@ public class UserManagement {
         userAccountService.registerUser(username, password, isoCountryCode);
     }
 
-    public User checkCredentialsAndGetUser(String username, String password) throws SQLException {
+    public User checkCredentialsAndGetUser(String username, String password) throws SQLException, IllegalArgumentException {
         return userAccountService.checkCredentialsAndGetUser(username, password);
     }
 
@@ -30,11 +30,11 @@ public class UserManagement {
         return collectionService.getUserCollection(userId);
     }
 
-    public void addGame(int userId, String gameId) throws SQLException{
+    public void addGameToCollection(int userId, String gameId) throws SQLException{
         collectionService.addGame(userId, gameId);
     }
 
-    public void removeGame(int userId, String gameId) throws SQLException{
+    public void removeGameFromCollection(int userId, String gameId) throws SQLException{
         collectionService.removeGame(userId, gameId);
     }
 
@@ -58,7 +58,7 @@ public class UserManagement {
         return wishlistService.getWishlistedGamesByUserUsername(username);
     }
 
-    
+
 
 
 }

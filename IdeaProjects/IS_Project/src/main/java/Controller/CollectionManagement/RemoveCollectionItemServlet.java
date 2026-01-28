@@ -3,7 +3,6 @@ import Controller.Utility;
 import Model.User;
 
 import Model.UserManagement;
-import Service.CollectionService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +36,7 @@ public class RemoveCollectionItemServlet extends HttpServlet {
         UserManagement userManagement = new UserManagement();
 
         try {
-            userManagement.removeGame(loggedUser.getID(), gameId);
+            userManagement.removeGameFromCollection(loggedUser.getID(), gameId);
             response.sendRedirect("Collection/View");
         } catch (SQLException e) {
             Utility.addError(request, "Errore nella rimozione del gioco dalla collezione");
