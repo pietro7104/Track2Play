@@ -6,9 +6,7 @@
     <title>Login</title>
 </head>
 <body style="background-color: #070c21; display: flex; flex-direction:column; align-items: center; justify-content: center">
-<form action="APITest" method="get">
-    <input class="button" type="submit" value="Test API">
-</form>
+<jsp:include page="includables/NavBar.jsp"/>
 
 <fieldset class="login_fieldset">
     <div class="title">Login</div>

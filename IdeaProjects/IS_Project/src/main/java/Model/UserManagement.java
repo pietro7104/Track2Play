@@ -18,6 +18,18 @@ public class UserManagement {
         userAccountService.registerUser(username, password, isoCountryCode);
     }
 
+    public User getUserByID(int id) throws SQLException, IllegalArgumentException {
+        return userAccountService.getUserByID(id);
+    }
+
+    public void modifyUserPasswordById(int id, String newPassword) throws SQLException, IllegalArgumentException {
+        userAccountService.modifyUserPasswordById(id, newPassword);
+    }
+
+    public void modifyISOCodeById(int id, String isoCode) throws SQLException, IllegalArgumentException {
+        userAccountService.modifyISOCodeById(id, isoCode);
+    }
+
     public User checkCredentialsAndGetUser(String username, String password) throws SQLException, IllegalArgumentException {
         return userAccountService.checkCredentialsAndGetUser(username, password);
     }

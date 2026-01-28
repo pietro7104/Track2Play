@@ -24,7 +24,7 @@ public class RemoveCollectionItemServlet extends HttpServlet {
         String gameId = request.getParameter("gameId");
 
         HttpSession session = request.getSession();
-        User loggedUser = (User) session.getAttribute("username");
+        User loggedUser = (User) session.getAttribute("user");
 
         if (loggedUser == null) {
             Utility.addError(request, "Devi effettuare il login per rimuovere giochi dalla collezione");
