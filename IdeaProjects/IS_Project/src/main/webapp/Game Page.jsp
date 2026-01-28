@@ -4,6 +4,8 @@
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="userManagement" class="Model.UserManagement" scope="page"/>
+
 
 <link rel="stylesheet" href="CSS/style.css">
 
@@ -18,6 +20,10 @@
 </head>
 
 <jsp:include page="includables/Error%20Popup.jsp"/>
+<jsp:include page="includables/Buy%20Popup.jsp">
+  <jsp:param name="gameID" value="${requestScope.info.isThereAnyDealID}"/>
+  <jsp:param name="userID" value="${sessionScope.user.ID}"/>
+</jsp:include>
 
 <body class="home-page">
 <jsp:include page="includables/NavBar.jsp"/>
@@ -47,7 +53,82 @@
         </c:forEach>
       </span>
     </div>
-    <span style="font-size: 30px; font-weight: bold; margin-top: 20px">Reviews:</span>
+
+    <c:if test="${sessionScope.user != null}">
+      <div class="buttons" style="display: flex; flex-direction: row; margin-top: 10px; margin-bottom: 10px; gap: 5px">
+        <c:catch var="wishlistError">
+          <c:forEach var="item" items="${userManagement.getWishlistedGamesByUserId(sessionScope.user.ID)}">
+            <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
+              <c:set var="gameInWishlist" value="true"/>
+            </c:if>
+          </c:forEach>
+        </c:catch>
+
+        <c:catch var="collectionError">
+          <c:forEach var="item" items="${userManagement.getUserCollection(sessionScope.user.ID)}">
+            <c:if test="${item.gameId == requestScope.info.isThereAnyDealID}">
+              <c:set var="gameInCollection" value="true"/>
+            </c:if>
+          </c:forEach>
+        </c:catch>
+
+
+        <c:choose>
+          <c:when test="${wishlistError != null}">
+            <span class="error-message">Errore nel controllo della wishlist </span>
+          </c:when>
+
+          <c:when test="${gameInWishlist == null}">
+            <form action="WishlistAdd" method="post">
+              <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
+              <button class="add-to-wishlist-button" type="submit">
+                Aggiungi alla wishlist
+              </button>
+            </form>
+          </c:when>
+
+          <c:when test="${gameInWishlist != null}">
+            <form action="Wishlist/Remove" method="post">
+              <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
+              <button class="remove-from-wishlist-button" type="submit">
+                Rimuovi dalla wishlist
+              </button>
+            </form>
+          </c:when>
+        </c:choose>
+
+        <c:choose>
+          <c:when test="${collectionError != null}">
+            <span class="error-message">Errore nel controllo della collezione</span>
+          </c:when>
+
+          <c:when test="${gameInCollection == null}">
+              <button class="add-to-collection-button" type="submit" onclick="TogglePopup('buy-popup')">
+                Aggiungi alla collezione
+              </button>
+          </c:when>
+
+          <c:when test="${gameInCollection != null}">
+            <form action="Wishlist/Remove" method="post">
+              <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
+              <button class="remove-from-collection-button" type="submit">
+                Rimuovi dalla collezione
+              </button>
+            </form>
+          </c:when>
+        </c:choose>
+      </div>
+    </c:if>
+      <c:choose>
+        <c:when test="${requestScope.info.reviews != null and requestScope.info.reviews.size() gt 0}">
+          <span style="font-size: 30px; font-weight: bold; margin-top: 20px">Reviews:</span>
+        </c:when>
+        <c:otherwise>
+          <span style="font-size: 30px; font-weight: bold; margin-top: 20px">Nessuna recensione</span>
+        </c:otherwise>
+      </c:choose>
+
+
     <div class="review-display">
       <c:forEach var="review" items="${requestScope.info.reviews}">
         <a class="unstyled review" <c:if test="${review.url != null}">href="${review.url}"</c:if>>

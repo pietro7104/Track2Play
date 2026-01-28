@@ -40,6 +40,7 @@ public class ViewCollectionServlet extends HttpServlet {
             List<CollectionItem> collection =
                     userManagement.getUserCollection(loggedUser.getID());
 
+
             request.setAttribute("collection", collection);
             RequestDispatcher rd =
                     request.getRequestDispatcher("Collection Page.jsp");

@@ -79,6 +79,7 @@ public class SearchServlet extends HttpServlet {
             request.setAttribute("prices", prices);
             request.setAttribute("search_results", games);
             request.setAttribute("query", query);
+            session.setAttribute("prices", prices);
 
         }
         catch (APIException e){

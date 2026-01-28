@@ -28,7 +28,6 @@
                         <jsp:param name="cut" value="${bestDeal.cut}"/>
                         <jsp:param name="regularPrice" value="${bestDeal.regularPrice.amount}"/>
                         <jsp:param name="currency" value="${bestDeal.dealPrice.currency}"/>
-                        <jsp:param name="priceInfo" value="${requestScope.prices.get(game.getIsThereAnyDealID())}"/>
                     </jsp:include>
                 </c:if>
             </c:forEach>

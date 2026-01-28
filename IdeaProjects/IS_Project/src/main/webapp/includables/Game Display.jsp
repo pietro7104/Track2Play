@@ -6,9 +6,6 @@
 <body>
 <form id="open-page-form-${param.gameID}" action="OpenGamePage" method="get">
     <input type="hidden" name="itadid" value="${param.gameID}">
-    <c:if test="${param.priceInfo != null}">
-        <input type="hidden" name="price" value="${param.priceInfo}">
-    </c:if>
 
 
     <div class="game-display" onclick="document.getElementById('open-page-form-${param.gameID}').submit()">

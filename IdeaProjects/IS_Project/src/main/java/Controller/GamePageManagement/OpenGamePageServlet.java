@@ -28,9 +28,17 @@ public class OpenGamePageServlet extends HttpServlet {
         if (user == null)  countryCode = "IT";
         else countryCode = user.getCountryISO();
 
+
         String id = request.getParameter("itadid");
-        Price price = (Price)request.getAttribute("price");
-        request.setAttribute("price", price);
+        HashMap<String, Price> prices = null;
+        Price price = null;
+        try{
+            prices = (HashMap<String, Price>)session.getAttribute("prices");
+            price = prices.getOrDefault(id, null);
+            request.setAttribute("price", prices.getOrDefault(id, null));
+        }catch (ClassCastException | NullPointerException _){}
+
+
         APIInterface api = Utility.getAPI();
         try {
             Game info =  api.GetGameInfoByIsThereAnyDealID(id);
@@ -48,7 +56,7 @@ public class OpenGamePageServlet extends HttpServlet {
             try{
                 ArrayList<String> ids = new ArrayList<>();
                 ids.add(id);
-                HashMap<String, Price> prices = api.GetGamesPrices(ids, api.GetShopIDs(countryCode), countryCode, false, 0, true);
+                prices = api.GetGamesPrices(ids, api.GetShopIDs(countryCode), countryCode, false, 0, true);
                 price = prices.getOrDefault(id, null);
                 if (price == null) {
                     Utility.addError(request, "Errore nell'ottenimento dei prezzi del gioco");

@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 public class Utility {
 
@@ -60,5 +57,25 @@ public class Utility {
 
     public String dateToStringJSP(Date date){
         return dateToString(date);
+    }
+
+    public static ArrayList<Currency> getAllCurrencies()
+    {
+        ArrayList<Currency> toret = new ArrayList<Currency>();
+        Locale[] locs = Locale.getAvailableLocales();
+
+        for(Locale loc : locs) {
+            try {
+                Currency currency = Currency.getInstance( loc );
+                if ( currency != null ) {
+                    toret.add( currency );
+                }
+            } catch(Exception exc)
+            {
+                // Locale not found
+            }
+        }
+
+        return toret;
     }
 }

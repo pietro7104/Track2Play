@@ -27,9 +27,6 @@
     </div>
 
     <div style="display: flex; flex-direction: row">
-        <a href="Collection Page.jsp">
-            <button class="navbar_button">Collezione</button>
-        </a>
         <c:choose>
             <c:when test="${sessionScope.user != null}">
                 <a href="Settings Page.jsp">

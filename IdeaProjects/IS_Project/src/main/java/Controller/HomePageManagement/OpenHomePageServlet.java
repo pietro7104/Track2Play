@@ -50,6 +50,7 @@ public class OpenHomePageServlet extends HttpServlet {
             request.setAttribute("games", games);
             request.setAttribute("topGames", topGames);
             request.setAttribute("prices", prices);
+            session.setAttribute("prices", prices);
         } catch (APIException e) {
             Utility.addError(request, "Errore nel caricamento della home page");
             System.out.println(e.getMessage());
