@@ -36,8 +36,14 @@ public class RemoveWishlistItemServlet extends HttpServlet {
         try {
             userManagement.removeFromWishlistById(loggedUser.getID(), gameId);
             response.sendRedirect("Wishlist/View");
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nella rimozione dell'articolo dalla wishlist");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nella rimozione dell'articolo dalla wishlist.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
         }

@@ -38,8 +38,14 @@ public class RemoveCollectionItemServlet extends HttpServlet {
         try {
             userManagement.removeGameFromCollection(loggedUser.getID(), gameId);
             response.sendRedirect("Collection/View");
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nella rimozione del gioco dalla collezione");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nella rimozione del gioco dalla collezione.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
             rd.forward(request, response);
         }

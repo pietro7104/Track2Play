@@ -38,8 +38,14 @@ public class AddCollectionItemServlet extends HttpServlet {
         try {
             userManagement.addGameToCollection(loggedUser.getID(), gameId);
             response.sendRedirect("Collection/View");
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nell'aggiungere il gioco alla collezione");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nell'aggiunta del gioco alla collezione.");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
             rd.forward(request, response);
         }

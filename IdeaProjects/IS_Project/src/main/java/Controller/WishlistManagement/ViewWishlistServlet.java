@@ -54,8 +54,14 @@ public class ViewWishlistServlet extends HttpServlet {
             request.setAttribute("wishlistItems", wishlistItems);
             RequestDispatcher rd = request.getRequestDispatcher("Wishlist.jsp");
             rd.forward(request, response);
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nel recuperare gli articoli della wishlist: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nel recuperare gli articoli della wishlist: " + e.getMessage());
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
         } catch (APIException e) {
