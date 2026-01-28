@@ -271,7 +271,7 @@ public class Game {
         this.isThereAnyDealID = isThereAnyDealID;
         this.title = title;
         HashMap<String, String> assets = new HashMap<>();
-        assets.put("banner", banner);
+        assets.put("banner1", banner);
         this.assets = assets;
     }
 
@@ -286,7 +286,6 @@ public class Game {
                 try{r = Integer.parseInt(res);}
                 catch(Exception e){
                     r = 0;
-                    System.out.println(title + " - " + key);
                 }
 
                 if (r >= resolution) {
