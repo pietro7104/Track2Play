@@ -14,7 +14,7 @@ public class UserManagement {
     final CollectionService collectionService = new CollectionService();
     final WishlistService wishlistService = new WishlistService();
 
-    public void registerUser(String username, String password, String isoCountryCode) throws SQLException {
+    public void registerUser(String username, String password, String isoCountryCode) throws SQLException, IllegalArgumentException {
         userAccountService.registerUser(username, password, isoCountryCode);
     }
 
@@ -26,39 +26,35 @@ public class UserManagement {
         userAccountService.deleteUserById(id);
     }
 
-    public List<CollectionItem> getUserCollection(int userId) throws SQLException{
+    public List<CollectionItem> getUserCollection(int userId) throws SQLException, IllegalArgumentException{
         return collectionService.getUserCollection(userId);
     }
 
-    public void addGameToCollection(int userId, String gameId) throws SQLException{
+    public void addGameToCollection(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{
         collectionService.addGame(userId, gameId);
     }
 
-    public void removeGameFromCollection(int userId, String gameId) throws SQLException{
+    public void removeGameFromCollection(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{
         collectionService.removeGame(userId, gameId);
     }
 
-    public void setCompleted(int userId, String gameId, boolean completed) throws SQLException{
+    public void setCompleted(int userId, String gameId, boolean completed) throws SQLException, IllegalArgumentException, IllegalStateException{
         collectionService.setCompleted(userId, gameId, completed);
     }
 
-    public void addGameToWishlist(int userId, String gameId, Date date) throws SQLException{
+    public void addGameToWishlist(int userId, String gameId, Date date) throws SQLException, IllegalArgumentException{
         wishlistService.addGameToWishlist(userId, gameId, date);
     }
 
-    public void removeFromWishlistById(int userId, String gameId) throws SQLException {
+    public void removeFromWishlistById(int userId, String gameId) throws SQLException, IllegalArgumentException {
         wishlistService.removeFromWishlistById(userId, gameId);
     }
 
-    public List<WishlistItem> getWishlistedGamesByUserId(int userId) throws SQLException{
+    public List<WishlistItem> getWishlistedGamesByUserId(int userId) throws SQLException, IllegalArgumentException {
         return wishlistService.getWishlistedGamesByUserId(userId);
     }
 
-    public List<WishlistItem> getWishlistedGamesByUserUsername(String username) throws SQLException {
+    public List<WishlistItem> getWishlistedGamesByUserUsername(String username) throws SQLException, IllegalArgumentException {
         return wishlistService.getWishlistedGamesByUserUsername(username);
     }
-
-
-
-
 }

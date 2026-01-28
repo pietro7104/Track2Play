@@ -6,58 +6,66 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CollectionService {
-    private final CollectionItemDAO dao;
+    private final static CollectionItemDAO COLLECTION_ITEM_DAO = new CollectionItemDAO();
 
-    public CollectionService() {
-        dao = new CollectionItemDAO();
+    public CollectionService() { }
+
+    public List<CollectionItem> getUserCollection(int userId) throws SQLException, IllegalArgumentException{
+        if(!UserAccountService.checkUserId(userId))
+            throw new IllegalArgumentException("Utente non valido");
+
+        return COLLECTION_ITEM_DAO.getCollectionItemsByUserId(userId);
     }
 
-    public List<CollectionItem> getUserCollection(int userId) throws SQLException{
-        if (userId <= 0) {
-            throw new IllegalArgumentException("Id utente non valido");
-        }
-        return dao.getCollectionItemsByUserId(userId);
-    }
+    public void addGame(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{
+        if(!UserAccountService.checkUserId(userId))
+            throw new IllegalArgumentException("Utente non valido");
 
-    public void addGame(int userId, String gameId) throws SQLException{
-        validateUserAndGame(userId, gameId);
+        if(!checkGameID(gameId))
+            throw new IllegalArgumentException("Id del gioco non valido");
+
         if (existsInCollection(userId, gameId)) {
             throw new IllegalStateException("Gioco già presente nella collezione");
         }
-        dao.addGameToCollection(userId, gameId);
+        COLLECTION_ITEM_DAO.addGameToCollection(userId, gameId);
     }
 
-    public void removeGame(int userId, String gameId) throws SQLException{
-        validateUserAndGame(userId, gameId);
+    public void removeGame(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{
+        if(!UserAccountService.checkUserId(userId))
+            throw new IllegalArgumentException("Utente non valido");
+
+        if(!checkGameID(gameId))
+            throw new IllegalArgumentException("Id del gioco non valido");
+
         if (!existsInCollection(userId, gameId)) {
             throw new IllegalStateException("Gioco non presente nella collezione");
         }
-        dao.removeGameFromCollection(userId, gameId);
+        COLLECTION_ITEM_DAO.removeGameFromCollection(userId, gameId);
     }
 
-    public void setCompleted(int userId, String gameId, boolean completed) throws SQLException{
-        validateUserAndGame(userId, gameId);
+    public void setCompleted(int userId, String gameId, boolean completed) throws SQLException, IllegalArgumentException, IllegalStateException{
+        if(!UserAccountService.checkUserId(userId))
+            throw new IllegalArgumentException("Utente non valido");
+
+        if(!checkGameID(gameId))
+            throw new IllegalArgumentException("Id del gioco non valido");
+
         if (!existsInCollection(userId, gameId)) {
             throw new IllegalStateException("Impossibile aggiornare: gioco non presente");
         }
-        dao.updateCompletionStatus(userId, gameId, completed);
-    }
-
-    private void validateUserAndGame(int userId, String gameId) {
-        if (userId <= 0) {
-            throw new IllegalArgumentException("Id utente non valido");
-        }
-        if (gameId == null || gameId.isBlank()) {
-            throw new IllegalArgumentException("Id gioco non valido");
-        }
+        COLLECTION_ITEM_DAO.updateCompletionStatus(userId, gameId, completed);
     }
 
     private boolean existsInCollection(int userId, String gameId) throws SQLException {
-        for (CollectionItem item : dao.getCollectionItemsByUserId(userId)) {
+        for (CollectionItem item : COLLECTION_ITEM_DAO.getCollectionItemsByUserId(userId)) {
             if (gameId.equals(item.getGameId())) {
                 return true; // trovato
             }
         }
         return false; // non trovato
+    }
+
+    protected static boolean checkGameID(String gameId) {
+        return gameId != null && gameId.length() <= 36 && !gameId.isBlank() && !gameId.isEmpty();
     }
 }

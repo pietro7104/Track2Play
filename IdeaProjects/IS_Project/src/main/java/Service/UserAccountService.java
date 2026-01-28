@@ -8,11 +8,9 @@ import java.sql.SQLException;
 
 public class UserAccountService {
 
-    public final UserDAO dao;
+    public final static UserDAO USER_DAO = new UserDAO();
 
-    public UserAccountService() {
-        this.dao = new UserDAO();
-    }
+    public UserAccountService() { }
 
     public void registerUser(String username, String password, String codiceISO) throws IllegalArgumentException, SQLException {
         // Controlli sull'username, password, codiceISO
@@ -27,7 +25,7 @@ public class UserAccountService {
 
 
         // Controllo se è già presente un utente con l'username inserito
-        if (dao.getUserByUsername(username) != null){
+        if (USER_DAO.getUserByUsername(username) != null){
             throw new RuntimeException("Username già in uso");
         }
 
@@ -35,7 +33,7 @@ public class UserAccountService {
         String hashedPassword = Utility.toHash(password);
 
         // Salvataggio dell'utente nel database
-        dao.addUser(username, hashedPassword, codiceISO);
+        USER_DAO.addUser(username, hashedPassword, codiceISO);
     }
 
     public User checkCredentialsAndGetUser(String username, String password) throws SQLException, IllegalArgumentException {
@@ -49,7 +47,7 @@ public class UserAccountService {
         User foundUser;
 
         // Cerco nel database un utente con quell'username
-        foundUser = dao.getUserByUsername(username);
+        foundUser = USER_DAO.getUserByUsername(username);
 
         // Se nessun utente con quell'username è trovato
         if (foundUser == null)
@@ -67,22 +65,22 @@ public class UserAccountService {
         if(!checkUserId(id))
             throw new IllegalArgumentException("Id non valido.");
 
-        dao.deleteUserByID(id);
+        USER_DAO.deleteUserByID(id);
     }
 
-    protected boolean checkUserId(int id) {
+    protected static boolean checkUserId(int id) {
         return id > 0;
     }
 
-    protected boolean checkUserUsername(String username) {
+    protected static boolean checkUserUsername(String username) {
         return username.length() <= 30 && !username.isBlank() && !username.isEmpty();
     }
 
-    protected boolean checkUserPassword(String password) {
+    protected static boolean checkUserPassword(String password) {
         return password.length() <= 15 && !password.isBlank() && !password.isEmpty();
     }
 
-    protected boolean checkUserCodiceISO(String codiceISO) {
+    protected static boolean checkUserCodiceISO(String codiceISO) {
         return codiceISO.length() <= 2 && !codiceISO.isBlank() && !codiceISO.isEmpty();
     }
 
