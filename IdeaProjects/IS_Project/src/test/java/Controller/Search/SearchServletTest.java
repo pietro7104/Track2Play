@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class SearchServletTest {
 
     @Test
-    void SearchServletGivesErrorWhenQueryIsEmpty() throws ServletException, IOException {
+    void SearchServletGivesErrorAndSendsToHomePageWhenQueryIsEmpty() throws ServletException, IOException {
 
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher rd = mock(RequestDispatcher.class);
@@ -32,8 +32,8 @@ class SearchServletTest {
 
         when(request.getParameter("query")).thenReturn("");
         when(request.getSession()).thenReturn(session);
-        when(request.getRequestDispatcher("Home Page.jsp")).thenReturn(rd);
-        when(request.getRequestDispatcher("Search Result Page.jsp")).thenReturn(rd);
+        when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(rd);
+
 
         HashMap<String, Object> attributes = new HashMap<>();
 
@@ -55,11 +55,15 @@ class SearchServletTest {
             errors = (ArrayList<String>) attributes.get("error_list");
         }catch (ClassCastException _){}
 
+
         assert(errors != null && !errors.isEmpty() && errors.getFirst().equals("Nessun termine di ricerca"));
+        verify(request, times(1)).getRequestDispatcher(Mockito.anyString());
+        verify(request).getRequestDispatcher("Home Page.jsp");
+        verify(rd, times(1)).forward(request, response);
     }
 
     @Test
-    void SearchResultIsNotEmptyWhenTitleIsARealGame() throws ServletException, IOException {
+    void SearchResultIsNotEmptyAndUserIsSentToResultPageWhenTitleIsARealGame() throws ServletException, IOException {
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher rd = mock(RequestDispatcher.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -98,27 +102,15 @@ class SearchServletTest {
             prices = (LinkedHashMap<String, Price>) map.getOrDefault("prices", null);
         }catch (ClassCastException _){}
 
-        System.out.println(prices);
-        System.out.println(searchResults);
 
         assert(prices != null);
         assert(searchResults != null);
         assert(!prices.isEmpty());
         assert(!searchResults.isEmpty());
 
+        verify(request, times(1)).getRequestDispatcher(Mockito.anyString());
+        verify(request).getRequestDispatcher("Search Result Page.jsp");
+        verify(rd, times(1)).forward(request, response);
     }
 
-    public void setArray(ArrayList array1, ArrayList array2) {
-        array1 = new ArrayList<>();
-        for (Object o : array2) {
-            array1.add(o);
-        }
-    }
-
-    public void setHashMap(LinkedHashMap hashmap1, LinkedHashMap hashmap2) {
-        hashmap1 = new LinkedHashMap<>();
-        for (Object o : hashmap2.keySet()) {
-            hashmap1.put(o, hashmap2.get(o));
-        }
-    }
 }
