@@ -37,6 +37,7 @@ public class RemoveCollectionItemServlet extends HttpServlet {
 
         try {
             userManagement.removeGameFromCollection(loggedUser.getID(), gameId);
+            System.out.println("removed");
             response.sendRedirect("CollectionView");
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -46,8 +47,8 @@ public class RemoveCollectionItemServlet extends HttpServlet {
                 Utility.addError(request, e.getMessage());
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
-            rd.forward(request, response);
+            ViewCollectionServlet viewCollectionServlet = new ViewCollectionServlet();
+            viewCollectionServlet.doGet(request, response);
         }
     }
 }

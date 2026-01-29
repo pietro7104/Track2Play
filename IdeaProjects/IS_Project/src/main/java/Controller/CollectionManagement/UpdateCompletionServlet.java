@@ -48,7 +48,7 @@ public class UpdateCompletionServlet extends HttpServlet {
                 Utility.addError(request, e.getMessage());
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Collection Page.jsp");
             rd.forward(request, response);
         }
     }

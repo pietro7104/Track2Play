@@ -74,6 +74,10 @@ public class UserManagement {
         return purchaseService.getUserPurchases(userId);
     }
 
+    public void makePurchase(int userId, String gameID, java.util.Date date, String platform, float price, String currency, boolean gift) throws SQLException {
+        purchaseService.makePuchase(userId, gameID, date, platform, price, currency, gift);
+    }
+
     public UserStats getStats(int userId) throws SQLException, IllegalArgumentException {
         return userStatsService.getStats(userId);
     }

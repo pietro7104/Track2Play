@@ -19,7 +19,7 @@
     <h3>Riepilogo</h3>
     <p>Giochi acquistati: ${stats.purchasedGames}</p>
     <p>Giochi ricevuti in regalo: ${stats.giftedGames}</p>
-    <p>Totale speso: ${stats.totalSpent} ${stats.currency}</p>
+    <p>Totale speso: ${stats.totalSpent}</p>
   </div>
 
   <div class="stat-box">
