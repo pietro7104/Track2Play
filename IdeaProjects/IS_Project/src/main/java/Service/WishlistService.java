@@ -1,5 +1,6 @@
 package Service;
 
+import Model.Game;
 import Model.WishlistItem;
 import Model.WishlistItemDAO;
 
@@ -13,22 +14,22 @@ public class WishlistService {
 
     public WishlistService() { }
 
-    public void addGameToWishlist(int userId, String gameId, Date date) throws SQLException, IllegalArgumentException {
+    public void addGameToWishlist(int userId, Game gameToAdd, Date date) throws SQLException, IllegalArgumentException {
         if(!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Utente non valido");
 
-        if(!CollectionService.checkGameID(gameId))
-            throw new IllegalArgumentException("Id del gioco non valido");
+        // Aggiunta del gioco nel sistema
+        GameService gameService = new GameService();
+        gameService.addGame(gameToAdd);
 
-
-        WISHLIST_ITEM_DAO.addItemToWishlist(userId, gameId, date);
+        WISHLIST_ITEM_DAO.addItemToWishlist(userId, gameToAdd.getIsThereAnyDealID(), date);
     }
 
     public void removeFromWishlistById(int userId, String gameId) throws SQLException, IllegalArgumentException {
         if(!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Utente non valido");
 
-        if(!CollectionService.checkGameID(gameId))
+        if(!GameService.checkGameID(gameId))
             throw new IllegalArgumentException("Id del gioco non valido");
 
         WISHLIST_ITEM_DAO.removeItemFromWishlistByGameId(userId, gameId);

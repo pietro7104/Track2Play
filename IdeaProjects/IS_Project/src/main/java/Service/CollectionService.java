@@ -21,7 +21,7 @@ public class CollectionService {
         if(!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Utente non valido");
 
-        if(!checkGameID(gameId))
+        if(!GameService.checkGameID(gameId))
             throw new IllegalArgumentException("Id del gioco non valido");
 
         if (existsInCollection(userId, gameId)) {
@@ -34,7 +34,7 @@ public class CollectionService {
         if(!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Utente non valido");
 
-        if(!checkGameID(gameId))
+        if(!GameService.checkGameID(gameId))
             throw new IllegalArgumentException("Id del gioco non valido");
 
         if (!existsInCollection(userId, gameId)) {
@@ -47,7 +47,7 @@ public class CollectionService {
         if(!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Utente non valido");
 
-        if(!checkGameID(gameId))
+        if(!GameService.checkGameID(gameId))
             throw new IllegalArgumentException("Id del gioco non valido");
 
         if (!existsInCollection(userId, gameId)) {
@@ -63,9 +63,5 @@ public class CollectionService {
             }
         }
         return false; // non trovato
-    }
-
-    protected static boolean checkGameID(String gameId) {
-        return gameId != null && gameId.length() <= 36 && !gameId.isBlank() && !gameId.isEmpty();
     }
 }

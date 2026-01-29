@@ -21,7 +21,6 @@ public class GameDAO {
             ps.executeUpdate();
             ps.close();
         }
-        con.close();
     }
 
     // Metodo per verificare se un gioco esiste già nella tabella Gioco
@@ -40,7 +39,6 @@ public class GameDAO {
 
         rs.close();
         ps.close();
-        con.close();
         return exists;
     }
 
@@ -64,7 +62,6 @@ public class GameDAO {
 
         rs.close();
         ps.close();
-        con.close();
         return game;
     }
 }

@@ -8,16 +8,14 @@ import java.util.List;
 
 public class PurchaseService {
 
-    private final PurchaseDAO dao;
+    private final static PurchaseDAO PURCHASE_DAO = new PurchaseDAO();
 
-    public PurchaseService() {
-        dao = new PurchaseDAO();
-    }
+    public PurchaseService() { }
 
     public List<Purchase> getUserPurchases(int userId) throws SQLException {
-        if (userId <= 0) {
+        if (!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Id utente non valido");
-        }
-        return dao.getUserPurchases(userId);
+
+        return PURCHASE_DAO.getUserPurchases(userId);
     }
 }

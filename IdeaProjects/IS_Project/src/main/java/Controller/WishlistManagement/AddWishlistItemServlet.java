@@ -1,6 +1,7 @@
 package Controller.WishlistManagement;
 
 import Controller.Utility;
+import Model.Game;
 import Model.UserManagement;
 import Service.WishlistService;
 import Model.User;
@@ -24,6 +25,8 @@ public class AddWishlistItemServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottieni l'id del gioco dal form
         String gameId = request.getParameter("gameId");
+        String gameTitle = request.getParameter("gameTitle");
+        String gameBanner = request.getParameter("gameBanner");
 
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute("user");
@@ -35,10 +38,11 @@ public class AddWishlistItemServlet extends HttpServlet {
             return;
         }
 
+        Game gameToAdd = new Game(gameId, gameTitle, gameBanner);
         UserManagement userManagement = new UserManagement();
 
         try {
-            userManagement.addGameToWishlist(loggedUser.getID(), gameId, new Date());
+            userManagement.addGameToWishlist(loggedUser.getID(), gameToAdd, new Date());
             response.sendRedirect("WishlistView");  // Reindirizza alla pagina di visualizzazione della wishlist
         } catch (Exception e){
             System.out.println(e.getMessage());

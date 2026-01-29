@@ -54,8 +54,8 @@ public class UserManagement {
         collectionService.setCompleted(userId, gameId, completed);
     }
 
-    public void addGameToWishlist(int userId, String gameId, Date date) throws SQLException, IllegalArgumentException{
-        wishlistService.addGameToWishlist(userId, gameId, date);
+    public void addGameToWishlist(int userId, Game gameToAdd, Date date) throws SQLException, IllegalArgumentException{
+        wishlistService.addGameToWishlist(userId, gameToAdd, date);
     }
 
     public void removeFromWishlistById(int userId, String gameId) throws SQLException, IllegalArgumentException {

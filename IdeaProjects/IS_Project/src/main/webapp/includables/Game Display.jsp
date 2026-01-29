@@ -22,12 +22,12 @@
                 <span class="game-price-text"><fmt:formatNumber value="${param.price}" type="currency" currencyCode="${param.currency}"/></span>
             </div>
         </c:if>
-        <c:if test="${param.addedDate != null}">
+        <%--<c:if test="${param.addedDate != null}">
             <div class="addedDate-display">
                 <fmt:parseDate var="parsedDate" value="${param.addedDate}" pattern="dd/MM/yyyy"/>
-                <span>Aggiunto il <fmt:formatDate value="${parsedDate}"/></span>
+                <span>Aggiunto il <c:out value="${parsedDate}"/></span>
             </div>
-        </c:if>
+        </c:if>--%>
     </div>
 </form>
 
