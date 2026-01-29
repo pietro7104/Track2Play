@@ -29,7 +29,7 @@
             <div class="collection">
 
                 <c:forEach items="${requestScope.collection}" var="item">
-
+                    <div style="display: flex; flex-direction: column; align-items: center">
                     <jsp:include page="includables/Game Display.jsp">
                         <jsp:param name="gameID" value="${item.gameId}"/>
                         <jsp:param name="image" value="${item.cover}"/>
@@ -39,27 +39,30 @@
                         <jsp:param name="completed" value="${item.completed}"/>
                     </jsp:include>
 
-                    <!-- Pulsante di rimozione -->
-                    <form action="CollectionRemove" method="post" style="text-align:center;">
-                        <input type="hidden" name="gameId" value="${item.gameId}">
-                        <button type="submit">Rimuovi dalla collezione</button>
-                    </form>
-                    <!-- Stato di completamento gioco -->
-                    <form action="CollectionUpdateCompletion" method="post">
+                    <div style="display: flex; flex-direction: row; gap: 15px; align-items: center">
+                        <!-- Pulsante di rimozione -->
+                        <form action="CollectionRemove" method="post" style="text-align:center;">
+                            <input type="hidden" name="gameId" value="${item.gameId}">
+                            <button class="remove-game-button" type="submit">Rimuovi dalla collezione</button>
+                        </form>
+                        <!-- Stato di completamento gioco -->
+                        <form action="CollectionUpdateCompletion" method="post">
 
-                        <input type="hidden" name="gameId" value="${item.gameId}" />
+                            <input type="hidden" name="gameId" value="${item.gameId}" />
 
-                        <label>
-                            <input type="checkbox"
-                                   name="completed"
-                                   value="true"
-                                   onchange="this.form.submit()"
-                                   <c:if test="${item.completed}">checked</c:if> />
-                            Completato
-                        </label>
+                            <label>
+                                <input type="checkbox"
+                                       name="completed"
+                                       value="true"
+                                       onchange="this.form.submit()"
+                                       <c:if test="${item.completed}">checked</c:if> />
+                                Completato
+                            </label>
 
-                    </form>
+                        </form>
+                    </div>
 
+                    </div>
                 </c:forEach>
 
             </div>

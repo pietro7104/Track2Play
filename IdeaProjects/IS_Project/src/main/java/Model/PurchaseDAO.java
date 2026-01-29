@@ -44,11 +44,11 @@ public class PurchaseDAO {
         return purchases;
     }
 
-    public void makePurchase(int userID, String gameID, java.sql.Date date, String platform, float price, String currency, boolean gift) throws SQLException {
+    public void makePurchase(int userID, String gameID, java.sql.Timestamp date, String platform, float price, String currency, boolean gift) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO Acquisto VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-        ps.setDate(1, date);
+        ps.setTimestamp(1, date);
         ps.setInt(2, userID);
         ps.setString(3, gameID);
         ps.setString(4, platform);

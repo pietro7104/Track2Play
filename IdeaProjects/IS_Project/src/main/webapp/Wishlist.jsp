@@ -26,7 +26,7 @@
         <div class="collection">
 
             <c:forEach items="${requestScope.wishlistItems}" var="item">
-
+                <div style="display: flex; flex-direction: column; align-items: center">
                 <c:set var="bestDeal" value="${requestScope.prices.get(item.gameId).GetBestDeal()}"/>
                 <jsp:include page="includables/Game Display.jsp">
                     <jsp:param name="gameID" value="${item.gameId}"/>
@@ -42,9 +42,9 @@
                 <!-- Bottone rimozione -->
                 <form action="WishlistRemove" method="post" style="text-align:center;">
                     <input type="hidden" name="gameId" value="${item.gameId}">
-                    <button type="submit">Rimuovi dalla wishlist</button>
+                    <button class="remove-game-button" type="submit">Rimuovi dalla wishlist</button>
                 </form>
-
+                </div>
             </c:forEach>
 
         </div>

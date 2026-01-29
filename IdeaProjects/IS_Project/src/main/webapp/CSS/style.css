@@ -274,6 +274,20 @@ script{
     margin-left: 15px;
 }
 
+.remove-game-button{
+    font-size: 12px;
+    background-color: transparent;
+    border: none;
+    color: #b3b3b3;
+}
+
+.remove-game-button:hover{
+    transition: 0.2s;
+    text-decoration:underline;
+    text-decoration-style: dotted;
+}
+
+
 
 .game-display{
     display: flex;
@@ -502,15 +516,28 @@ script{
 
 .remove-from-collection-button{
     border: none;
-    background-color: #ed822b;
+    background-color: grey;
     color: white;
     padding: 3px;
     border-radius: 5px;
 }
 
 .remove-from-collection-button:hover{
+    cursor: default;
+    background-color: grey;
+}
+
+.buy-button{
+    border: none;
+    background-color: #ffb468;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.buy-button:hover{
     cursor: pointer;
-    background-color: #ea8c3f;
+    background-color: #ff9b33;
 }
 
 .tag{

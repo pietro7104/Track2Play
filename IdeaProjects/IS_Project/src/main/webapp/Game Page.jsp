@@ -105,20 +105,24 @@
           </c:when>
 
           <c:when test="${gameInCollection == null}">
+            <form action="CollectionAdd" method="post">
+              <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <button class="add-to-collection-button" type="submit" onclick="TogglePopup('buy-popup')">
                 Aggiungi alla collezione
               </button>
+            </form>
           </c:when>
 
           <c:when test="${gameInCollection != null}">
-            <form action="CollectionRemove" method="post">
-              <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <button class="remove-from-collection-button" type="submit">
-                Rimuovi dalla collezione
+                Già in collezione
               </button>
-            </form>
           </c:when>
         </c:choose>
+
+        <button class="buy-button" onclick="TogglePopup('buy-popup')">
+          Registra acquisto
+        </button>
       </div>
     </c:if>
       <c:choose>

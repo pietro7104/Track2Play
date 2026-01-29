@@ -6,18 +6,18 @@
 <jsp:useBean id="now" class="java.util.Date" />
 
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="time"/>
-<fmt:formatDate value="${now}" pattern="HH:mm" var="timeM"/>
+<fmt:formatDate value="${now}" pattern="HH:mm:ss" var="timeM"/>
 
 <div class="popup-block" id="buy-popup">
     <div class="buy-popup" style="flex-direction: column;">
-        <form id="buy-form" action="CollectionAdd" method="post"
+        <form id="buy-form" action="Purchase" method="post"
               style="display: flex; flex-direction: column">
             <input type="hidden" name="gameId" value="${param.gameID}">
             <span style="display: flex; flex-direction: row; justify-content: space-between">Data di acquisto: <label>
                     <input type="date" name="buy-date" value="${time}">
                 </label>
                 <label>
-                    <input type="time" name="buy-time" value="${timeM}">
+                    <input type="time" step="1" name="buy-time" value="${timeM}">
                 </label>
 
             </span>
