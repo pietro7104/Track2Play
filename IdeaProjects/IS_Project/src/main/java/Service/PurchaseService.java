@@ -12,7 +12,7 @@ public class PurchaseService {
 
     public PurchaseService() { }
 
-    public List<Purchase> getUserPurchases(int userId) throws SQLException {
+    public List<Purchase> getUserPurchases(int userId) throws SQLException, IllegalArgumentException {
         if (!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Id utente non valido");
 

@@ -1,6 +1,7 @@
 package Controller.UserStatsManagement;
 import Controller.Utility;
 import Model.Purchase;
+import Model.UserManagement;
 import Model.UserStats;
 import Service.PurchaseService;
 import Service.UserStatsService;
@@ -33,24 +34,31 @@ public class ViewUserStatsServlet extends HttpServlet {
             return;
         }
 
+        UserManagement userManagement = new UserManagement();
+        UserStats stats = null;
+        List<Purchase> purchases = null;
+
         try {
-            UserStatsService statsService = new UserStatsService();
-            PurchaseService purchaseService = new PurchaseService();
+            stats = userManagement.getStats(loggedUser.getID());
+            purchases = userManagement.getUserPurchases(loggedUser.getID());
 
-            UserStats stats = statsService.getStats(loggedUser.getID());
-            List<Purchase> purchases = purchaseService.getUserPurchases(loggedUser.getID());
+        } catch (Exception e){
+            if(e.getClass() == SQLException.class){
+                Utility.addError(request, "Errore nella registrazione");
+            } else {
+                Utility.addError(request, e.getMessage());
+            }
 
-            request.setAttribute("stats", stats);
-            request.setAttribute("purchases", purchases);
-
-            RequestDispatcher rd = request.getRequestDispatcher("Stats.jsp");
-            rd.forward(request, response);
-
-        } catch (SQLException e) {
-            Utility.addError(request, "Errore nel caricamento delle statistiche");
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
+            return;
         }
+
+        request.setAttribute("stats", stats);
+        request.setAttribute("purchases", purchases);
+
+        RequestDispatcher rd = request.getRequestDispatcher("Stats.jsp");
+        rd.forward(request, response);
     }
 }
 

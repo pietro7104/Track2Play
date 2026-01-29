@@ -10,10 +10,10 @@ public class UserStatsService {
 
     public UserStatsService() {}
 
-    public UserStats getStats(int userId) throws SQLException {
-        if (userId <= 0) {
+    public UserStats getStats(int userId) throws SQLException, IllegalArgumentException {
+        if (!UserAccountService.checkUserId(userId))
             throw new IllegalArgumentException("Id utente non valido");
-        }
+
         return USER_STATS_DAO.getUserStats(userId);
     }
 }

@@ -1,8 +1,6 @@
 package Model;
 
-import Service.CollectionService;
-import Service.UserAccountService;
-import Service.WishlistService;
+import Service.*;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -13,6 +11,8 @@ public class UserManagement {
     final UserAccountService userAccountService = new UserAccountService();
     final CollectionService collectionService = new CollectionService();
     final WishlistService wishlistService = new WishlistService();
+    final UserStatsService userStatsService = new UserStatsService();
+    final PurchaseService purchaseService = new PurchaseService();
 
     public void registerUser(String username, String password, String isoCountryCode) throws SQLException, IllegalArgumentException {
         userAccountService.registerUser(username, password, isoCountryCode);
@@ -68,5 +68,13 @@ public class UserManagement {
 
     public List<WishlistItem> getWishlistedGamesByUserUsername(String username) throws SQLException, IllegalArgumentException {
         return wishlistService.getWishlistedGamesByUserUsername(username);
+    }
+
+    public List<Purchase> getUserPurchases(int userId) throws SQLException, IllegalArgumentException {
+        return purchaseService.getUserPurchases(userId);
+    }
+
+    public UserStats getStats(int userId) throws SQLException, IllegalArgumentException {
+        return userStatsService.getStats(userId);
     }
 }
