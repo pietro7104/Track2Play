@@ -35,7 +35,7 @@ public class RemoveWishlistItemServlet extends HttpServlet {
 
         try {
             userManagement.removeFromWishlistById(loggedUser.getID(), gameId);
-            response.sendRedirect("Wishlist/View");
+            response.sendRedirect("WishlistView");
         }catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){
