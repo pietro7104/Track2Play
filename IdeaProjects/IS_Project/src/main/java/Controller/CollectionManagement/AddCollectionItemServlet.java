@@ -37,7 +37,7 @@ public class AddCollectionItemServlet extends HttpServlet {
 
         try {
             userManagement.addGameToCollection(loggedUser.getID(), gameId);
-            response.sendRedirect("Collection/View");
+            response.sendRedirect("CollectionView");
         }catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){
