@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             foundUser = userManagement.checkCredentialsAndGetUser(username, password);
+            response.setStatus(HttpServletResponse.SC_OK);
         }catch (Exception e){
             System.out.println(e.getMessage());
             if(e.getClass() == SQLException.class){
@@ -38,6 +39,7 @@ public class LoginServlet extends HttpServlet {
                 Utility.addError(request, e.getMessage());
             }
 
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             return;

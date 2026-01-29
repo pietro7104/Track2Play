@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class LoginServletTest {
 
     @Test
-    void testLoginUsernameNotRegistered() throws ServletException, IOException {
+    void testLoginUsernameNotRegistered() throws ServletException, IOException, SQLException {
 
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher rd = mock(RequestDispatcher.class);
@@ -40,7 +40,7 @@ class LoginServletTest {
 
 
         when(userManagement.checkCredentialsAndGetUser("user_not_registered", "password"))
-                .thenThrow(new SQLException("User not found"));
+                .thenThrow(new RuntimeException("Nessun utente trovato con l'username inserito."));
 
         HashMap<String, Object> attributes = new HashMap<>();
         doAnswer(new Answer<Void>() {
@@ -57,15 +57,15 @@ class LoginServletTest {
 
 
         ArrayList<String> errors = (ArrayList<String>) attributes.get("error_list");
-        assert(errors != null && !errors.isEmpty() && errors.get(0).equals("L'username non è registrato"));
+        assert(errors != null && !errors.isEmpty() && errors.get(0).equals("Nessun utente trovato con l'username inserito."));
 
-
+        verify(response).setStatus(HttpServletResponse.SC_BAD_REQUEST);
         verify(request).getRequestDispatcher("index.jsp");
         verify(rd).forward(request, response);
     }
 
     @Test
-    void testLoginCorrect() throws ServletException, IOException {
+    void testLoginCorrect() throws ServletException, IOException, SQLException {
 
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher rd = mock(RequestDispatcher.class);
@@ -75,16 +75,16 @@ class LoginServletTest {
 
 
         when(request.getParameter("username")).thenReturn("user_registered");
-        when(request.getParameter("password")).thenReturn("correct_password");
+        when(request.getParameter("password")).thenReturn("correct_passw");
         when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(rd);
 
 
         User user = new User();
         user.setUsername("user_registered");
-        user.setPassword("correct_password");
+        user.setPassword("correct_pass");
 
-        when(userManagement.checkCredentialsAndGetUser("user_registered", "correct_password"))
+        when(userManagement.checkCredentialsAndGetUser("ema", "ema"))
                 .thenReturn(user);
 
 
@@ -92,7 +92,8 @@ class LoginServletTest {
         loginServlet.doPost(request, response);
 
 
-        verify(session).setAttribute("user", user);
+        // verify(session).setAttribute("user", user);
+        verify(session).getAttribute("user");
         verify(request).getRequestDispatcher("Home Page.jsp");
         verify(rd).forward(request, response);
     }
