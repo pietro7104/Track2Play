@@ -6,7 +6,7 @@
 
 <div class="popup-block" id="buy-popup">
     <div class="popup" style="flex-direction: column;">
-        <form id="buy-form" action="Collection/Add" method="post">
+        <form id="buy-form" action="CollectionAdd" method="post">
             <input type="hidden" name="gameId" value="${param.gameID}">
             <input type="hidden" name="userId" value="${param.userID}">
             Data di acquisto: <input type="date" name="buy-date" value="<%= new java.util.Date()%>">

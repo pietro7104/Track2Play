@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/Collection/Add")
+@WebServlet("/CollectionAdd")
 public class AddCollectionItemServlet extends HttpServlet {
 
     @Override

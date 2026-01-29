@@ -41,7 +41,7 @@
 
                 <!-- Bottone rimozione -->
                 <form action="WishlistRemove" method="post" style="text-align:center;">
-                    <input type="hidden" name="gameItemId" value="${item.gameId}">
+                    <input type="hidden" name="gameId" value="${item.gameId}">
                     <button type="submit">Rimuovi dalla wishlist</button>
                 </form>
 

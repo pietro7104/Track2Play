@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/Collection/UpdateCompletion")
+@WebServlet("/CollectionUpdateCompletion")
 public class UpdateCompletionServlet extends HttpServlet {
 
     @Override

@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/Collection/Remove")
+@WebServlet("/CollectionRemove")
 public class RemoveCollectionItemServlet extends HttpServlet {
 
     @Override
