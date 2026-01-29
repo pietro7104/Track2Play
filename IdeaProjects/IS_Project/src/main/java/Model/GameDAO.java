@@ -17,7 +17,7 @@ public class GameDAO {
             );
             ps.setString(1, game.getIsThereAnyDealID());
             ps.setString(2, game.getTitle());
-            ps.setString(3, game.getAssets().get("banner"));
+            ps.setString(3, game.GetHighestResolutionBanner());
             ps.executeUpdate();
             ps.close();
         }
