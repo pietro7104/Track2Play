@@ -42,8 +42,8 @@ public class UserManagement {
         return collectionService.getUserCollection(userId);
     }
 
-    public void addGameToCollection(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{
-        collectionService.addGame(userId, gameId);
+    public void addGameToCollection(int userId, Game gameToAdd) throws SQLException, IllegalArgumentException, IllegalStateException{
+        collectionService.addGame(userId, gameToAdd);
     }
 
     public void removeGameFromCollection(int userId, String gameId) throws SQLException, IllegalArgumentException, IllegalStateException{

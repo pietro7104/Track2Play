@@ -1,5 +1,6 @@
 package Controller.CollectionManagement;
 import Controller.Utility;
+import Model.Game;
 import Model.User;
 
 import Model.UserManagement;
@@ -26,6 +27,8 @@ public class AddCollectionItemServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String gameId = request.getParameter("gameId");
+        String gameTitle = request.getParameter("gameTitle");
+        String gameBanner = request.getParameter("gameBanner");
 
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute("user");
@@ -37,10 +40,11 @@ public class AddCollectionItemServlet extends HttpServlet {
             return;
         }
 
+        Game gameToAdd = new Game(gameId, gameTitle, gameBanner);
         UserManagement userManagement = new UserManagement();
 
         try {
-            userManagement.addGameToCollection(loggedUser.getID(), gameId);
+            userManagement.addGameToCollection(loggedUser.getID(), gameToAdd);
 
             response.sendRedirect("CollectionView");
         }catch (Exception e){

@@ -68,7 +68,7 @@ public class UserDAO {
     public void deleteUserByID(int id) throws SQLException
     {
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement("delete from user where ID = ?");
+        PreparedStatement ps = con.prepareStatement("delete from utente where IdUtente = ?");
         ps.setInt(1, id);
         ps.executeUpdate();
     }
