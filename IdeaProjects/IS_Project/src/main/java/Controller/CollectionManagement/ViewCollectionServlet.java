@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/Collection/View")
+@WebServlet("/CollectionView")
 public class ViewCollectionServlet extends HttpServlet {
 
     @Override

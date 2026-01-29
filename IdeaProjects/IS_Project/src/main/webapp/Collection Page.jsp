@@ -19,7 +19,7 @@
     <c:choose>
 
         <c:when test="${requestScope.collection == null or requestScope.collection.size() le 0}">
-            <div>Nessun gioco nella collezione</div>
+            <div style="margin-left: 20px">Nessun gioco nella collezione</div>
         </c:when>
 
         <c:otherwise>

@@ -10,16 +10,16 @@
 
 <jsp:include page="includables/Error Popup.jsp"/>
 
-<body>
+<body class="home-page">
 
 <jsp:include page="includables/NavBar.jsp"/>
 
-<div style="font-size: 30px">La tua wishlist</div>
+<h1>La tua wishlist</h1>
 
 <c:choose>
 
     <c:when test="${requestScope.wishlistItems == null or requestScope.wishlistItems.size() le 0}">
-        <div>Nessun gioco nella wishlist</div>
+        <div style="margin-left: 20px">Nessun gioco nella wishlist</div>
     </c:when>
 
     <c:otherwise>

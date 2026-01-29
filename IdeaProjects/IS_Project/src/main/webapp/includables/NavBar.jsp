@@ -29,13 +29,18 @@
     <div style="display: flex; flex-direction: row">
         <c:choose>
             <c:when test="${sessionScope.user != null}">
+                <a href="CollectionView">
+                    <button class="navbar_button">Collezione</button>
+                </a>
+
+                <a href="WishlistView">
+                    <button class="navbar_button">Wishlist</button>
+                </a>
+
                 <a href="Settings Page.jsp">
                     <button class="navbar_button">Impostazioni Account</button>
                 </a>
 
-                <a href="Collection Page.jsp">
-                    <button class="navbar_button">Collezione</button>
-                </a>
             </c:when>
 
             <c:otherwise>
