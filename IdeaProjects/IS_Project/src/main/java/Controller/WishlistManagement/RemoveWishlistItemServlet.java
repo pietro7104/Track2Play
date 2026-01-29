@@ -20,7 +20,7 @@ public class RemoveWishlistItemServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottieni l'ID del gioco nell'item da rimuovere
-        String gameId = request.getParameter("gameItemId");
+        String gameId = request.getParameter("gameId");
 
         User loggedUser = ((User) request.getSession().getAttribute("user"));
 

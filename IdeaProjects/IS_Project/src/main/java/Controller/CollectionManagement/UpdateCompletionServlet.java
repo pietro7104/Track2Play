@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/Collection/UpdateCompletion")
+@WebServlet("/CollectionUpdateCompletion")
 public class UpdateCompletionServlet extends HttpServlet {
 
     @Override
@@ -48,7 +48,7 @@ public class UpdateCompletionServlet extends HttpServlet {
                 Utility.addError(request, e.getMessage());
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher("collection.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Collection Page.jsp");
             rd.forward(request, response);
         }
     }

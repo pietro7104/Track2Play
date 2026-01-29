@@ -8,9 +8,12 @@
 <link rel="stylesheet" href="CSS/style.css">
 
 <html>
+
 <head>
     <title>Collezione</title>
 </head>
+
+<jsp:include page="includables/Error%20Popup.jsp"/>
 <body class="home-page">
     <jsp:include page="includables/NavBar.jsp"/>
 
@@ -37,12 +40,12 @@
                     </jsp:include>
 
                     <!-- Pulsante di rimozione -->
-                    <form action="Collection/Remove" method="post" style="text-align:center;">
-                        <input type="hidden" name="gameItemId" value="${item.gameId}">
+                    <form action="CollectionRemove" method="post" style="text-align:center;">
+                        <input type="hidden" name="gameId" value="${item.gameId}">
                         <button type="submit">Rimuovi dalla collezione</button>
                     </form>
                     <!-- Stato di completamento gioco -->
-                    <form action="Collection/UpdateCompletion" method="post">
+                    <form action="CollectionUpdateCompletion" method="post">
 
                         <input type="hidden" name="gameId" value="${item.gameId}" />
 
@@ -63,17 +66,6 @@
         </c:otherwise>
 
     </c:choose>
-    <div class="collection">
-        <jsp:include page="includables/Game Display.jsp">
-            <jsp:param name="image" value="images/silksong_header.jpg"/>
-            <jsp:param name="game_name" value="Hollow Knight: Silksong"/>
-            <jsp:param name="addedDate" value="${Utility.dateToStringJSP(ourDate)}"/>
-        </jsp:include>
 
-        <jsp:include page="includables/Game Display.jsp">
-            <jsp:param name="image" value="images/silksong_header.jpg"/>
-            <jsp:param name="game_name" value="Hollow Knight: Silksong"/>
-        </jsp:include>
-    </div>
 </body>
 </html>

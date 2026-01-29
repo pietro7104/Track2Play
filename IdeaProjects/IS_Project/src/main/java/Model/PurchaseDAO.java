@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PurchaseDAO {
@@ -19,6 +20,7 @@ public class PurchaseDAO {
                         "WHERE A.IdUtente = ? " +
                         "ORDER BY A.Data_Acquisto DESC"
         );
+
 
         ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
@@ -40,6 +42,21 @@ public class PurchaseDAO {
         ps.close();
 
         return purchases;
+    }
+
+    public void makePurchase(int userID, String gameID, java.sql.Date date, String platform, float price, String currency, boolean gift) throws SQLException {
+        Connection con = Database.getConnection();
+        PreparedStatement ps = con.prepareStatement("INSERT INTO Acquisto VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        ps.setDate(1, date);
+        ps.setInt(2, userID);
+        ps.setString(3, gameID);
+        ps.setString(4, platform);
+        ps.setFloat(5, price);
+        ps.setBoolean(6, gift);
+        ps.setString(7, currency);
+
+        ps.executeUpdate();
     }
 }
 

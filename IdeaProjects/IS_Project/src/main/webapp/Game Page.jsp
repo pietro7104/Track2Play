@@ -90,7 +90,7 @@
           </c:when>
 
           <c:when test="${gameInWishlist != null}">
-            <form action="Wishlist/Remove" method="post">
+            <form action="WishlistRemove" method="post">
               <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <button class="remove-from-wishlist-button" type="submit">
                 Rimuovi dalla wishlist
@@ -111,7 +111,7 @@
           </c:when>
 
           <c:when test="${gameInCollection != null}">
-            <form action="Wishlist/Remove" method="post">
+            <form action="CollectionRemove" method="post">
               <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <button class="remove-from-collection-button" type="submit">
                 Rimuovi dalla collezione

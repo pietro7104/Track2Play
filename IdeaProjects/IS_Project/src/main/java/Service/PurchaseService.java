@@ -18,4 +18,12 @@ public class PurchaseService {
 
         return PURCHASE_DAO.getUserPurchases(userId);
     }
+
+    public void makePuchase(int userId, String gameID, java.util.Date date, String platform, float price, String currency, boolean gift) throws SQLException {
+        if (!UserAccountService.checkUserId(userId))
+            throw new IllegalArgumentException("Id utente non valido");
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        PURCHASE_DAO.makePurchase(userId, gameID, sqlDate, platform, price, currency, gift);
+    }
+
 }
