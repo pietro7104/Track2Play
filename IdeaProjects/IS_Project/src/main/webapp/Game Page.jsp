@@ -107,6 +107,8 @@
           <c:when test="${gameInCollection == null}">
             <form action="CollectionAdd" method="post">
               <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
+              <input type="hidden" name="gameTitle" value="${requestScope.info.title}">
+              <input type="hidden" name="gameBanner" value="${requestScope.info.GetHighestResolutionBanner()}">
               <button class="add-to-collection-button" type="submit" onclick="TogglePopup('buy-popup')">
                 Aggiungi alla collezione
               </button>

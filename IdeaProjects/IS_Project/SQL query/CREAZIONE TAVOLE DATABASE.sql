@@ -80,7 +80,7 @@ for each row
 BEGIN
 	UPDATE collezione set Num_tot = Num_tot + 1 WHERE IdUtente = NEW.IdUtente;
 
-	 UPDATE collezione set Num_NonCompletati = Num_NonCompletati + 1 WHERE IdUtente = NEW.IdUtente;
+	UPDATE collezione set Num_NonCompletati = Num_NonCompletati + 1 WHERE IdUtente = NEW.IdUtente;
 END;
 //
 
@@ -135,8 +135,8 @@ END;
 DELIMITER //
 
 create trigger delete_aggiunto
-    after delete on aggiunto
-    for each row
+after delete on aggiunto
+for each row
 BEGIN
     UPDATE Collezione SET Num_Tot = Num_Tot - 1 WHERE IdUtente = OLD.IdUtente;
     IF (SELECT Stato From Completamento C WHERE C.IdUtente = OLD.IdUtente AND C.IdGioco = OLD.IdGioco) = false THEN
@@ -148,5 +148,25 @@ BEGIN
     END IF;
 
     DELETE FROM Completamento WHERE IdUtente = OLD.IdUtente AND IdGioco = OLD.IdGioco;
+END;
+//
+
+# Trigger 6 #
+# Trigger per l eliminazione della collezione, wishlist e acquisti di un utente dopo la cancellazione del suo account
+DELIMITER //
+
+create trigger delete_utente
+    after delete on utente
+    for each row
+BEGIN
+    DELETE FROM Aggiunto WHERE IdUtente = OLD.IdUtente;
+
+    DELETE FROM Collezione WHERE IdUtente = OLD.IdUtente;
+
+    DELETE FROM Acquisto WHERE IdUtente = OLD.IdUtente;
+
+    DELETE FROM Completamento WHERE IdUtente = OLD.IdUtente;
+
+    DELETE FROM Wishlist WHERE IdUtente = OLD.IdUtente;
 END;
 //

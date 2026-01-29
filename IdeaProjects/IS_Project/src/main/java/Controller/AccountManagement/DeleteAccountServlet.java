@@ -1,5 +1,6 @@
 package Controller.AccountManagement;
 
+import Controller.HomePageManagement.OpenHomePageServlet;
 import Controller.Utility;
 import Model.User;
 import Model.UserDAO;
@@ -36,11 +37,14 @@ public class DeleteAccountServlet extends HttpServlet {
                 Utility.addError(request, e.getMessage());
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Settings Page.jsp");
             rd.forward(request, response);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher("Home Page.jsp");
-            rd.forward(request, response);
+
+            session.invalidate();
+
+            OpenHomePageServlet openHomePageServlet = new OpenHomePageServlet();
+            openHomePageServlet.doGet(request, response);
         }
     }
 }
