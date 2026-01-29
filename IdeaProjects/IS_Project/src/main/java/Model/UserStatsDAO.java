@@ -23,10 +23,8 @@ public class UserStatsDAO {
 
                         "(SELECT COALESCE(SUM(A.Prezzo), 0) " +
                         " FROM Acquisto A " +
-                        " JOIN Utente U ON U.IdUtente = A.IdUtente " +
                         " WHERE A.IdUtente = C.IdUtente " +
-                        " AND A.Regalo = false " +
-                        " AND A.Moneta_ISO = U.Codice_ISO) AS Spesa_Totale, " +
+                        " AND A.Regalo = false   AS Spesa_Totale, " +
 
                         "(SELECT Codice_ISO FROM Utente WHERE IdUtente = C.IdUtente) AS Valuta " +
 
