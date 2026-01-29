@@ -37,9 +37,16 @@
                     <button class="navbar_button">Wishlist</button>
                 </a>
 
+                <a href="ViewStats">
+                    <button class="navbar_button">Statistiche</button>
+                </a>
+
                 <a href="Settings Page.jsp">
                     <button class="navbar_button">Impostazioni Account</button>
                 </a>
+
+
+
 
             </c:when>
 
