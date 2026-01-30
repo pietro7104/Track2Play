@@ -25,7 +25,7 @@
                 <span>Prezzo: </span>
                 <div>
                 <label>
-                    <input type="number" name="price" value="0" style="width: 40px">
+                    <input type="number" name="price" value="0" min="0" style="width: 40px">
                 </label>
                 <label>
                     <select name="currency_code">
