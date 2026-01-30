@@ -109,7 +109,7 @@
               <input type="hidden" name="gameId" value="${requestScope.info.isThereAnyDealID}">
               <input type="hidden" name="gameTitle" value="${requestScope.info.title}">
               <input type="hidden" name="gameBanner" value="${requestScope.info.GetHighestResolutionBanner()}">
-              <button class="add-to-collection-button" type="submit" onclick="TogglePopup('buy-popup')">
+              <button class="add-to-collection-button" type="submit">
                 Aggiungi alla collezione
               </button>
             </form>
