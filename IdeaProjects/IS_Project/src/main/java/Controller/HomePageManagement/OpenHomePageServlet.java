@@ -2,6 +2,7 @@ package Controller.HomePageManagement;
 
 
 import Controller.Utility;
+import GameReccomendation.GetReccomendations;
 import Model.APIControl.APIExceptions.APIException;
 import Model.APIControl.APIInterface;
 import Model.APIControl.Price;
@@ -30,6 +31,12 @@ public class OpenHomePageServlet extends HttpServlet {
         if (user == null)  countryCode = "IT";
         else countryCode = user.getCountryISO();
 
+        ArrayList<String> recs = new ArrayList<>();
+
+        if (user != null){
+            recs = GetReccomendations.get(user.getID());
+        }
+
         APIInterface api = Utility.getAPI();
         try {
             LinkedHashMap<Game, Price> gamePriceHashmap = api.GetDeals(countryCode, 0, 50, "-hot", false, false, api.GetShopIDs(countryCode), "");
@@ -51,6 +58,28 @@ public class OpenHomePageServlet extends HttpServlet {
             request.setAttribute("topGames", topGames);
             request.setAttribute("prices", prices);
             session.setAttribute("prices", prices);
+
+            if (user != null && recs != null) {
+                ArrayList<Game> reccomendations = new ArrayList<>();
+
+                ArrayList<String> recITADIds = new ArrayList<>();
+                for (String r: recs) {
+                    Game g = api.GetGameInfoBySteamID(r);
+                    if (!g.isMature()){
+                        reccomendations.add(g);
+                        recITADIds.add(g.getIsThereAnyDealID());
+                    }
+                }
+                if (!recITADIds.isEmpty()){
+                    LinkedHashMap<String, Price> reccomendationPrices = api.GetGamesPrices(recITADIds, api.GetShopIDs(user.getCountryISO()), user.getCountryISO(), false, 100, false);
+
+                    request.setAttribute("reccomendations", reccomendations);
+                    request.setAttribute("reccomendationPrices", reccomendationPrices);
+                }
+
+            }
+
+
         } catch (APIException e) {
             Utility.addError(request, "Errore nel caricamento della home page");
             System.out.println(e.getMessage());

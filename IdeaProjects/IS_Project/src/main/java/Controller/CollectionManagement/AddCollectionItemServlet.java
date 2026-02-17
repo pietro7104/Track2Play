@@ -1,9 +1,12 @@
 package Controller.CollectionManagement;
 import Controller.Utility;
-import Model.Game;
-import Model.User;
+import Model.*;
+import Model.APIControl.APIExceptions.APIException;
+import Model.APIControl.APIInterface;
 
-import Model.UserManagement;
+import Service.AddGameInfoService;
+import Service.CollectionService;
+import Service.WishlistService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +21,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 @WebServlet("/CollectionAdd")
 public class AddCollectionItemServlet extends HttpServlet {
@@ -38,6 +42,29 @@ public class AddCollectionItemServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             return;
+        }
+
+        try{
+            APIInterface api = Utility.getAPI();
+            Game game = api.GetGameInfoByIsThereAnyDealID(gameId);
+            TagDAO tagDAO = new TagDAO();
+            WishlistService ws = new WishlistService();
+            List<WishlistItem> wishlistItemList = ws.getWishlistedGamesByUserId(loggedUser.getID());
+
+            boolean inWishlist = false;
+            for (WishlistItem wishlistItem : wishlistItemList) {
+                if (wishlistItem.getGameId().equals(gameId)) {
+                    inWishlist = true;
+                    break;
+                }
+            }
+
+            if (!inWishlist) {
+                AddGameInfoService gi = new AddGameInfoService();
+                gi.addGameInfo(loggedUser.getID(), game);
+            }
+        }catch (APIException | SQLException e){
+            System.out.println(e.getMessage());
         }
 
         Game gameToAdd = new Game(gameId, gameTitle, gameBanner);

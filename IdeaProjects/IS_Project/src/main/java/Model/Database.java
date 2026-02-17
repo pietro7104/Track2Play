@@ -12,7 +12,7 @@ public class Database {
             try{
                 Class.forName("com.mysql.cj.jdbc.Driver");
 
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/track2play", "root", "Ema23456@");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/track2play", "root", "mYsql1212");
                 return conn;
             }
             catch (SQLException e)
